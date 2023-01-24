@@ -1,3 +1,5 @@
+import 'package:eagles_customer_app/userApp/loginpage.dart';
+import 'package:eagles_customer_app/userApp/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,10 +13,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: Colors.red,
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        // backgroundColor: Colors.red,
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
@@ -23,28 +25,40 @@ class _HomePageState extends State<HomePage> {
                 fit: BoxFit.scaleDown,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text('Grow Fast With',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
             const Text('Eagles',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text('An App for students to study for CA '),
             const Text('exams and to find relevant information'),
             const Text('in one place'),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0XffE5097F)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignUp(),
+                      ));
+                },
                 child: const Text('Sign Up')),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Already Have An Account?'),
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ));
+                    },
                     child: const Text(
                       'Log in',
                       style: TextStyle(fontWeight: FontWeight.bold),

@@ -11,18 +11,20 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          height: 300,
-          width: 300,
-          // decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //         image: AssetImage('assets/eagles logo.jpg'),
-          //         fit: BoxFit.fill)),
-          child: SvgPicture.asset(
-            'assets/eagles logo (1).svg',
-            fit: BoxFit.scaleDown,
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Container(
+            height: 300,
+            width: 300,
+            // decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //         image: AssetImage('assets/eagles logo.jpg'),
+            //         fit: BoxFit.fill)),
+            child: SvgPicture.asset(
+              'assets/eagles logo (1).svg',
+              fit: BoxFit.scaleDown,
+            ),
           ),
         ),
       ),

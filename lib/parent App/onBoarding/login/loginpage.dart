@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LogingPage extends StatefulWidget {
+  const LogingPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LogingPage> createState() => _LogingPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LogingPageState extends State<LogingPage> {
   String countryCode = 'IN';
   String phoneCode = '+91';
   TextEditingController contactNumber = TextEditingController();
