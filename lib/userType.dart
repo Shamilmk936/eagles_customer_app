@@ -1,4 +1,5 @@
 import 'package:eagles_customer_app/parent%20App/splashScreenP.dart';
+import 'package:eagles_customer_app/userApp/homepage.dart';
 import 'package:eagles_customer_app/userApp/splashScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class _UserTypeState extends State<UserType> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return SplashScreen();
+                          return HomePage();
                         },
                       ));
                     },
