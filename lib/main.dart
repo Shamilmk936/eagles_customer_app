@@ -1,3 +1,4 @@
+import 'package:eagles_customer_app/parent%20App/splashScreenP.dart';
 import 'package:eagles_customer_app/userApp/homepage.dart';
 import 'package:eagles_customer_app/userApp/otp.dart';
 import 'package:eagles_customer_app/userApp/planSelection.dart';
@@ -28,7 +29,7 @@ class _StudentAppState extends State<StudentApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UserType(),
+      home: SplashScreenP(),
     );
   }
 }

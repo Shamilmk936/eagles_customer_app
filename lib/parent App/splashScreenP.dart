@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:eagles_customer_app/parent%20App/Authentication/LoginPageP.dart';
+import 'package:eagles_customer_app/userType.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'Authentication/root.dart';
@@ -24,7 +25,7 @@ class _SplashScreenPState extends State<SplashScreenP> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginPageP(),
+            builder: (context) => const UserType(),
           ),
           (route) => false);
     });
