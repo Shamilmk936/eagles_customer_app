@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../main.dart';
 import '../Model/userModel.dart';
 import '../Screens/ManageProfile.dart';
-import 'LoginPage.dart';
+import 'LoginPageP.dart';
 
 var userName;
 var userImage;
@@ -92,7 +92,7 @@ signOut(BuildContext context) async {
       .then((value) => Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => LoginPage(),
+            builder: (context) => LoginPageP(),
           ),
           (route) => false));
 }

@@ -1,24 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eagles_customer_app/parent%20App/Authentication/splash_screen.dart';
+import 'package:eagles_customer_app/userType.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../main.dart';
 import '../../userApp/otp.dart';
-import '../Authentication/auth.dart';
+import '../Authentication/authP.dart';
 import '../Model/userModel.dart';
-import '../main.dart';
+import '../splashScreenP.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPageP extends StatefulWidget {
+  const LoginPageP({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPageP> createState() => _LoginPagePState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPagePState extends State<LoginPageP> {
   final _formkey = GlobalKey<FormState>();
   bool loading = false;
 
@@ -92,25 +91,35 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(child: CircularProgressIndicator()))
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white54,
               elevation: 0,
-              // leading: GestureDetector(
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: Padding(
-              //     padding: EdgeInsets.only(
-              //         top: scrHeight * 0.03,
-              //         left: scrWidth * 0.07,
-              //         bottom: scrHeight * 0.02,
-              //         right: scrWidth * 0.05),
-              //     child: Icon(
-              //       Icons.arrow_back,
-              //       color: Colors.black,
-              //       size: 25,
-              //     ),
-              //   ),
-              // ),
+              centerTitle: true,
+              title: const Text(
+                'Login as Parent',
+                style: TextStyle(color: Colors.black38),
+              ),
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UserType(),
+                      ),
+                      (route) => false);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: scrHeight * 0.03,
+                      left: scrWidth * 0.07,
+                      bottom: scrHeight * 0.02,
+                      right: scrWidth * 0.05),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 25,
+                  ),
+                ),
+              ),
             ),
             body: GestureDetector(
               onTap: () {
@@ -285,7 +294,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: scrHeight * 0.055,
                           width: scrWidth * 0.87,
                           decoration: BoxDecoration(
-                            color: Colors.purpleAccent,
+                            color: Color(0xffE5097F),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(

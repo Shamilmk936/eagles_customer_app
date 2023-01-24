@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../userApp/auth.dart';
-import '../../userApp/loginpage.dart';
-import '../Screens/LeavePage.dart';
-import '../Screens/ManageProfile.dart';
-import '../Screens/ReportsPage.dart';
-import '../Screens/AttendancePage.dart';
-import '../Screens/HomePage.dart';
+import '../userApp/auth.dart';
+import '../userApp/loginpage.dart';
+import 'Screens/LeavePage.dart';
+import 'Screens/ManageProfile.dart';
+import 'Screens/ReportsPage.dart';
+import 'Screens/AttendancePage.dart';
+import 'Screens/HomePageP.dart';
 
 String studentName = "";
 String parentName = "";
@@ -15,14 +15,14 @@ String parentNo = "";
 String studentEmail = "";
 String urlDp = "";
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class MainPageP extends StatefulWidget {
+  const MainPageP({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<MainPageP> createState() => _MainPagePState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPagePState extends State<MainPageP> {
   @override
   void initState() {
     getStudent();
@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
   var visiblecheck = true;
 
   dynamic _widgetOptions = <Widget>[
-    HomePage(),
+    HomePageP(),
     LeavePage(),
     ReportsPage(),
     AttendancePage(),
@@ -112,7 +112,7 @@ class _MainPageState extends State<MainPage> {
                 title: const Text('Home'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const HomePage()));
+                      builder: (context) => const HomePageP()));
                 },
               ),
               ListTile(

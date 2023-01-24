@@ -1,31 +1,30 @@
 import 'dart:async';
-import 'package:eagles_customer_app/parent%20App/Authentication/root.dart';
+
+import 'package:eagles_customer_app/parent%20App/Authentication/LoginPageP.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'Authentication/root.dart';
 
 var scrHeight;
 var scrWidth;
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class SplashScreenP extends StatefulWidget {
+  const SplashScreenP({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreenP> createState() => _SplashScreenPState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  // final _localNotificationService= FlutterLocalNotificationsPlugin();
-  // late final LocalNotificationService service;
-
+class _SplashScreenPState extends State<SplashScreenP> {
   @override
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => Rootingpage(),
+            builder: (context) => const LoginPageP(),
           ),
           (route) => false);
     });

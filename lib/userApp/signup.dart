@@ -3,7 +3,7 @@ import 'package:country_picker/country_picker.dart';
 import 'package:eagles_customer_app/userApp/loginpage.dart';
 import 'package:eagles_customer_app/userApp/otp.dart';
 import 'package:eagles_customer_app/userApp/auth.dart';
-import 'package:eagles_customer_app/splashScreen.dart';
+import 'package:eagles_customer_app/userApp/splashScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

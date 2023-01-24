@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../onBoarding/MainPage.dart';
-
+import '../MainPageP.dart';
 
 class ReportsPage extends StatefulWidget {
   const ReportsPage({Key? key}) : super(key: key);
@@ -12,44 +11,39 @@ class ReportsPage extends StatefulWidget {
 class _ReportsPageState extends State<ReportsPage> {
   @override
   Widget build(BuildContext context) {
-
     var h = MediaQuery.of(context).size.height;
     return Scaffold(
-
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-
         leading: IconButton(
           icon: new Icon(Icons.arrow_back_ios_sharp),
           color: Colors.black87,
-          iconSize: h*0.03,
+          iconSize: h * 0.03,
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainPage()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => MainPageP()));
           },
         ),
-
-        title: Text('Reports',
+        title: Text(
+          'Reports',
           style: TextStyle(
-            fontSize: h*0.03,
+            fontSize: h * 0.03,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
-
         actions: [
-          IconButton(onPressed: () {},
-            icon:new Icon(Icons.edit),
+          IconButton(
+            onPressed: () {},
+            icon: new Icon(Icons.edit),
             color: Colors.black87,
-            iconSize: h*0.03,
+            iconSize: h * 0.03,
           ),
         ],
-
       ),
-
       body: Container(),
-
     );
   }
 }
@@ -282,5 +276,3 @@ class _ReportsPageState extends State<ReportsPage> {
 //   }
 // }
 //
-
-

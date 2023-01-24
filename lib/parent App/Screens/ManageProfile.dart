@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../Authentication/auth.dart';
+import '../Authentication/authP.dart';
 import '../Model/userModel.dart';
-import '../onBoarding/MainPage.dart';
+import '../MainPageP.dart';
 
 String studentId = "";
-
 
 class ManageProfile extends StatefulWidget {
   const ManageProfile({Key? key}) : super(key: key);
@@ -15,13 +14,11 @@ class ManageProfile extends StatefulWidget {
   State<ManageProfile> createState() => _ManageProfileState();
 }
 
-
-
 class _ManageProfileState extends State<ManageProfile> {
-
-  Stream<QuerySnapshot<Map<String,dynamic>>>? studentStream =  FirebaseFirestore.instance
+  Stream<QuerySnapshot<Map<String, dynamic>>>? studentStream = FirebaseFirestore
+      .instance
       .collection('students')
-      .where('pMobno',isEqualTo:pMob )
+      .where('pMobno', isEqualTo: pMob)
       .snapshots();
 
 //   Future<List?> geStudent(String id) async {
@@ -65,10 +62,8 @@ class _ManageProfileState extends State<ManageProfile> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
 
@@ -77,44 +72,45 @@ class _ManageProfileState extends State<ManageProfile> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-
-
-        title: const Text('My students',
+        title: const Text(
+          'My students',
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
         ),
-
         actions: [
-          IconButton(onPressed: () {
-            signOut(context);
-          },
-            icon:new Icon(Icons.logout),
+          IconButton(
+            onPressed: () {
+              signOut(context);
+            },
+            icon: new Icon(Icons.logout),
             color: Colors.black87,
-            iconSize: h*0.03,
+            iconSize: h * 0.03,
           ),
         ],
-
       ),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StreamBuilder<QuerySnapshot>(
                 stream: studentStream,
-                builder: (context, snapshot){
-                  if(!snapshot.hasData){
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  if(snapshot.data!.docs.isEmpty){
-                    return Center(child: Text("No Students found"),);
+                  if (snapshot.data!.docs.isEmpty) {
+                    return Center(
+                      child: Text("No Students found"),
+                    );
                   }
                   var data = snapshot.data!.docs;
 
-
                   return SizedBox(
-                    height: h/4.7,
+                    height: h / 4,
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
@@ -124,25 +120,34 @@ class _ManageProfileState extends State<ManageProfile> {
                           onTap: () {
                             studentId = data[index]['sId'];
                             print('Student Id = $studentId ');
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage(),));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MainPageP(),
+                                ));
                             setState(() {});
                           },
                           child: Container(
-                            color: Colors.grey,
                             padding: const EdgeInsets.all(16),
                             child: Column(
                               children: [
-                                data[index]['profileImageUrl']!= ''
+                                data[index]['profileImageUrl'] != ''
                                     ? CircleAvatar(
-                                       radius: 40,
-                                        backgroundImage: NetworkImage(data[index]['profileImageUrl']),
+                                        radius: 40,
+                                        backgroundImage: NetworkImage(
+                                            data[index]['profileImageUrl']),
                                       )
-                                    :CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: Colors.red,
-                                  child: SvgPicture.asset('assets/eagleslogo.svg',width: 60,),
+                                    : CircleAvatar(
+                                        radius: 40,
+                                        backgroundColor: Colors.red,
+                                        child: SvgPicture.asset(
+                                          'assets/eagleslogo.svg',
+                                          width: 60,
+                                        ),
+                                      ),
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                                const SizedBox(height: 20,),
                                 Text(data[index]['name'])
                               ],
                             ),
@@ -188,12 +193,9 @@ class _ManageProfileState extends State<ManageProfile> {
                 },
                 child: const Text('Welcome OnBoard')),
             SizedBox(height: 20),
-
           ],
         ),
-
       ),
     );
   }
 }
-

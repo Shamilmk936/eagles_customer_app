@@ -1,27 +1,26 @@
-import 'package:eagles_customer_app/parent%20App/Authentication/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import '../../main.dart';
 import '../Screens/ManageProfile.dart';
-import '../main.dart';
+import '../splashScreenP.dart';
 
-class OtpPage extends StatefulWidget {
+class OtpPageP extends StatefulWidget {
   final String verId;
   final String number;
 
-  const OtpPage({
+  const OtpPageP({
     Key? key,
     required this.verId,
     required this.number,
   }) : super(key: key);
 
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  State<OtpPageP> createState() => _OtpPagePState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _OtpPagePState extends State<OtpPageP> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   TextEditingController otp = TextEditingController();

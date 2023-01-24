@@ -1,21 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../Authentication/auth.dart';
-import '../onBoarding/MainPage.dart';
+import '../Authentication/authP.dart';
+import '../MainPageP.dart';
 import 'ManageProfile.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePageP extends StatefulWidget {
+  const HomePageP({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePageP> createState() => _HomePagePState();
 }
 
-
-
-class _HomePageState extends State<HomePage> {
-
+class _HomePagePState extends State<HomePageP> {
   // getStudent() async {
   //   DocumentSnapshot sUser = await FirebaseFirestore.instance
   //       .collection('students')
@@ -39,13 +36,10 @@ class _HomePageState extends State<HomePage> {
       print(studentId);
       print(studentName);
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
 
@@ -58,12 +52,11 @@ class _HomePageState extends State<HomePage> {
         leading: IconButton(
           icon: new Icon(Icons.supervised_user_circle),
           color: Colors.black87,
-          iconSize: h*0.03,
+          iconSize: h * 0.03,
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ManageProfile()));
-            setState(() {
-
-            });
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ManageProfile()));
+            setState(() {});
           },
         ),
         // title: Text('My students',
@@ -75,15 +68,15 @@ class _HomePageState extends State<HomePage> {
         // ),
 
         actions: [
-          IconButton(onPressed: () {
-            signOut(context);
-          },
-            icon:new Icon(Icons.logout),
+          IconButton(
+            onPressed: () {
+              signOut(context);
+            },
+            icon: new Icon(Icons.logout),
             color: Colors.black87,
-            iconSize: h*0.03,
+            iconSize: h * 0.03,
           ),
         ],
-
       ),
       body: Center(
         child: Column(
@@ -107,14 +100,14 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   signOut(context);
                 },
-                child: const Text('Log Out',style: TextStyle(color: Colors.white),)),
+                child: const Text(
+                  'Log Out',
+                  style: TextStyle(color: Colors.white),
+                )),
             SizedBox(height: 20),
-
           ],
         ),
-
       ),
     );
   }
 }
-

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Model/userModel.dart';
-import '../onBoarding/MainPage.dart';
+import '../MainPageP.dart';
 import 'ManageProfile.dart';
 
 class LeavePage extends StatefulWidget {
@@ -179,7 +179,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
           iconSize: h * 0.03,
           onPressed: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const MainPage()));
+                MaterialPageRoute(builder: (context) => const MainPageP()));
           },
         ),
         title: Text(

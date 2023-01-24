@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eagles_customer_app/parent%20App/Authentication/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Model/userModel.dart';
-import '../onBoarding/MainPage.dart';
-import 'LoginPage.dart';
+import '../MainPageP.dart';
+import '../splashScreenP.dart';
+import 'LoginPageP.dart';
 
-class Rootingpage extends StatefulWidget {
-  const Rootingpage({Key? key}) : super(key: key);
+class RootingPageP extends StatefulWidget {
+  const RootingPageP({Key? key}) : super(key: key);
 
   @override
-  State<Rootingpage> createState() => _RootingpageState();
+  State<RootingPageP> createState() => _RootingPagePState();
 }
 
-class _RootingpageState extends State<Rootingpage> {
+class _RootingPagePState extends State<RootingPageP> {
   bool signedIn = false;
 
   getLoginStatus() {
@@ -68,6 +68,6 @@ class _RootingpageState extends State<Rootingpage> {
     scrHeight = MediaQuery.of(context).size.height;
     scrWidth = MediaQuery.of(context).size.width;
 
-    return signedIn == true ? const MainPage() : const LoginPage();
+    return signedIn == true ? const MainPageP() : const LoginPageP();
   }
 }
