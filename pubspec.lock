@@ -360,6 +360,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  omni_datetime_picker:
+    dependency: "direct main"
+    description:
+      name: omni_datetime_picker
+      sha256: "765cf5cd9df5f90c90059c51dbcb497e1110176935a7bf1c72a24e51099780a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   path:
     dependency: transitive
     description:

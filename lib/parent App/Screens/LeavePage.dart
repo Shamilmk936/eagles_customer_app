@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../Model/userModel.dart';
+import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+import '../Model/leaveModel.dart';
 import '../MainPageP.dart';
 import 'ManageProfile.dart';
 
@@ -28,11 +29,11 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
   DateTime? fromDate;
   DateTime? returnDate;
   DateTime? onDate;
+  int noDays = 0;
+
 
   final TextEditingController fromController = TextEditingController();
   final TextEditingController returnDateController = TextEditingController();
-  final TextEditingController onController = TextEditingController();
-  final TextEditingController nodaysController = TextEditingController();
   final TextEditingController reasonController = TextEditingController();
 
   void showSnackbar(String message) {
@@ -43,14 +44,14 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
   clearField() {
     fromController.clear();
     returnDateController.clear();
-    nodaysController.clear();
+    noDays = 0;
     reasonController.clear();
     leaveType = '';
+    typeId = '';
     setState(() {});
   }
 
-  Future neverSatisfied(String name, String leaveType, String cause,
-      String days, String status) async {
+  Future neverSatisfied(String name, String leaveType, String cause, String days, String status) async {
     return showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -58,95 +59,103 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
         return SimpleDialog(
           title: const Text('Request Details', textAlign: TextAlign.center),
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Wrap(
-                  children: <Widget>[
-                    const Text('Student Name : ',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.deepPurpleAccent,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic)),
-                    Text(name),
-                  ],
-                ),
-                Wrap(
-                  children: <Widget>[
-                    const Text('Type of Leave : ',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.deepPurpleAccent,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic)),
-                    Text(leaveType),
-                  ],
-                ),
-                Wrap(
-                  children: <Widget>[
-                    const Text('Cause : ',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.deepPurpleAccent,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic)),
-                    Text(cause),
-                  ],
-                ),
-                Wrap(
-                  children: <Widget>[
-                    const Text('Number of Days : ',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.deepPurpleAccent,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic)),
-                    Text(days),
-                  ],
-                ),
-                Wrap(
-                  children: <Widget>[
-                    const Text('Status : ',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.deepPurpleAccent,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic)),
-                    Text(status),
-                  ],
-                ),
-                // Wrap(
-                //   children: <Widget>[
-                //     const Text('    To:      ', style: TextStyle(fontSize: 15.0,color: Colors.deepPurpleAccent,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic)
-                //     ),
-                //     Text(to),
-                //   ],
-                // ),
-                // Wrap(
-                //   children: <Widget>[
-                //     const Text('    Reason Details:    ', style: TextStyle(fontSize: 15.0,color: Colors.deepPurpleAccent,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic)),
-                //     Text(reason),
-                //   ],
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text(
-                        "Close",
-                        style: TextStyle(
-                            fontSize: 17.0,
-                            color: Colors.black45,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text('Student Name      : ',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.deepPurpleAccent,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic)),
+                      Text(name),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text('Type of Leave      : ',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.deepPurpleAccent,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic)),
+                      Text(leaveType),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text('Cause                   : ',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.deepPurpleAccent,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic)),
+                      Text(cause),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text('Number of Days : ',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.deepPurpleAccent,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic)),
+                      Text(days),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text('Status                  : ',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.deepPurpleAccent,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic)),
+                      Text(status),
+                    ],
+                  ),
+                  // Wrap(
+                  //   children: <Widget>[
+                  //     const Text('    To:      ', style: TextStyle(fontSize: 15.0,color: Colors.deepPurpleAccent,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic)
+                  //     ),
+                  //     Text(to),
+                  //   ],
+                  // ),
+                  // Wrap(
+                  //   children: <Widget>[
+                  //     const Text('    Reason Details:    ', style: TextStyle(fontSize: 15.0,color: Colors.deepPurpleAccent,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic)),
+                  //     Text(reason),
+                  //   ],
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text(
+                          "Close",
+                          style: TextStyle(
+                              fontSize: 17.0,
+                              color: Colors.black45,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ],
         );
@@ -223,12 +232,13 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                   child: ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     children: <Widget>[
+                      const SizedBox(height: 10),
                       Container(
                         width: w * 0.9,
                         padding: const EdgeInsets.only(left: 15),
                         height: 50,
                         decoration: BoxDecoration(
-                            color: const Color(0XFFC7F3F0),
+                            color:  Colors.black12,
                             borderRadius: BorderRadius.circular(25)),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -253,13 +263,13 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       Container(
                         width: w * 0.9,
                         padding: const EdgeInsets.only(left: 15),
                         height: 50,
                         decoration: BoxDecoration(
-                            color: const Color(0XFFC7F3F0),
+                            color:  Colors.black12,
                             borderRadius: BorderRadius.circular(25)),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -284,13 +294,13 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       Container(
                         width: w * 0.9,
                         padding: const EdgeInsets.only(left: 15),
                         height: 50,
                         decoration: BoxDecoration(
-                            color: const Color(0XFFC7F3F0),
+                            color:  Colors.black12,
                             borderRadius: BorderRadius.circular(25)),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -315,6 +325,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10,),
                       InputDecorator(
                         decoration: const InputDecoration(
                           icon: Icon(Icons.assignment_late),
@@ -340,6 +351,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10,),
                       TextFormField(
                         maxLines: 2,
                         controller: reasonController,
@@ -349,9 +361,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                           labelText: 'Reason',
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10,),
                       const Align(
                           alignment: Alignment.topLeft, child: Text('Leave')),
                       RadioListTile(
@@ -359,10 +369,9 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                         value: "halfday",
                         groupValue: typeId,
                         onChanged: (value) {
-                          onController.clear();
                           fromController.clear();
                           returnDateController.clear();
-                          nodaysController.clear();
+                          noDays = 0;
                           typeId = value.toString();
                           setState(() {});
                         },
@@ -372,10 +381,9 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                         value: "fullday",
                         groupValue: typeId,
                         onChanged: (value) {
-                          nodaysController.clear();
-                          onController.clear();
                           fromController.clear();
                           returnDateController.clear();
+                          noDays = 0;
                           typeId = value.toString();
                           setState(() {});
                         },
@@ -385,10 +393,9 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                         value: "multipleday",
                         groupValue: typeId,
                         onChanged: (value) {
-                          nodaysController.clear();
-                          onController.clear();
                           fromController.clear();
                           returnDateController.clear();
+                          noDays = 0;
                           typeId = value.toString();
                           setState(() {});
                         },
@@ -398,17 +405,33 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                               children: [
                                 TextFormField(
                                   onTap: () async {
-                                    fromDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime.now(),
-                                        lastDate: DateTime(2100));
+                                    // fromDate = await showDatePicker(
+                                    //     context: context,
+                                    //     initialDate: DateTime.now(),
+                                    //     firstDate: DateTime.now(),
+                                    //     lastDate: DateTime(2100));
+
+                                    fromDate = await showOmniDateTimePicker(
+                                      context: context,
+                                      // primaryColor: Colors.cyan,
+                                      // backgroundColor: Colors.grey[900],
+                                      // calendarTextColor: Colors.white,
+                                      // tabTextColor: Colors.white,
+                                      // unselectedTabBackgroundColor: Colors.grey[700],
+                                      // buttonTextColor: Colors.white,
+                                      // timeSpinnerTextStyle: const TextStyle(color: Colors.white70, fontSize: 18),
+                                      // timeSpinnerHighlightedTextStyle: const TextStyle(color: Colors.white, fontSize: 24),
+                                      is24HourMode: false,
+                                      isShowSeconds: false,
+                                      startInitialDate: DateTime.now(),
+                                      startFirstDate: DateTime.now(),
+                                      startLastDate: DateTime.now().add(const Duration(days: 365)),
+                                      borderRadius: const Radius.circular(16),
+                                    );
 
                                     if (fromDate != null) {
-                                      fromController.text =
-                                          DateFormat('dd-MM-yyyy')
-                                              .format(fromDate!);
-                                      nodaysController.text = '0.5 day';
+                                      fromController.text = DateFormat('dd-MM-yyyy hh:mm a').format(fromDate!);
+                                      noDays = -1;
                                       setState(() {});
                                     }
                                   },
@@ -434,10 +457,8 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                             lastDate: DateTime(2100));
 
                                         if (fromDate != null) {
-                                          fromController.text =
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(fromDate!);
-                                          nodaysController.text = '1 day';
+                                          fromController.text = DateFormat('dd-MM-yyyy').format(fromDate!);
+                                          noDays = 1;
                                           setState(() {});
                                         }
                                       },
@@ -463,9 +484,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                                 lastDate: DateTime(2100));
 
                                             if (fromDate != null) {
-                                              fromController.text =
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(fromDate!);
+                                              fromController.text = DateFormat('dd-MM-yyyy').format(fromDate!);
                                               setState(() {});
                                             }
                                           },
@@ -483,29 +502,15 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                                   returnDate =
                                                       await showDatePicker(
                                                           context: context,
-                                                          initialDate: fromDate!
-                                                              .add(Duration(
-                                                            days: 1,
-                                                          )),
-                                                          firstDate: fromDate!
-                                                              .add(Duration(
-                                                            days: 1,
-                                                          )),
-                                                          lastDate:
-                                                              DateTime(2100));
+                                                          initialDate: fromDate!.add(Duration(days: 1,)),
+                                                          firstDate: fromDate!.add(Duration(days: 1,)),
+                                                          lastDate: DateTime(2100));
 
                                                   if (returnDate != null) {
-                                                    returnDateController.text =
-                                                        DateFormat('dd-MM-yyyy')
-                                                            .format(
-                                                                returnDate!);
-                                                    Duration diffrence =
-                                                        fromDate!.difference(
-                                                            returnDate!);
-                                                    var diff =
-                                                        diffrence.inDays.abs();
-                                                    nodaysController.text =
-                                                        '$diff days';
+                                                    returnDateController.text = DateFormat('dd-MM-yyyy').format(returnDate!);
+                                                    Duration change = fromDate!.difference(returnDate!).abs();
+                                                    noDays = change.inDays;
+                                                 
                                                     setState(() {});
                                                   }
                                                 },
@@ -525,11 +530,11 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                       ],
                                     )
                                   : SizedBox(),
-                      nodaysController.text != ''
+                     noDays != 0
                           ? Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Text(
-                                  'Number of Days Leave : ${nodaysController.text}',
+                                  'Number of Days Leave : ${noDays == -1 ? 'Half Day': '${noDays.toInt()} Days'} ',
                                   style: const TextStyle(fontSize: 15)),
                             )
                           : SizedBox(),
@@ -549,7 +554,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                 if (typeId != '' &&
                                     reasonController.text != '' &&
                                     leaveType != '' &&
-                                    nodaysController.text != '') {
+                                    noDays != 0) {
                                   showDialog(
                                       context: context,
                                       builder: (buildContext) {
@@ -564,36 +569,34 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                                 child: const Text('Cancel')),
                                             TextButton(
                                                 onPressed: () async {
+                                                  final details=LeaveModel(
+
+                                                    sId: studentId,
+                                                    sName: studentName,
+                                                    sMobNo: studentNo,
+                                                    sEmail: studentEmail,
+                                                    pName: parentName,
+                                                    pMobNo: parentNo,
+                                                    delete: false,
+                                                    status: 0,
+                                                    leaveSubmission: DateTime.now(),
+                                                    leaveType: leaveType,
+                                                    cause: reasonController.text,
+                                                    noDays: noDays,
+                                                    fromD: fromDate,
+                                                    toD: returnDate ?? fromDate!.add(const Duration(days: 1)),
+
+                                                  );
                                                   await FirebaseFirestore
                                                       .instance
                                                       .collection('leaveReport')
-                                                      .doc()
-                                                      .set({
-                                                    'fromDate': fromDate,
-                                                    'returnDate': returnDate ??
-                                                        fromDate!.add(
-                                                            const Duration(
-                                                                days: 1)),
-                                                    'noDays':
-                                                        nodaysController.text,
-                                                    'cause':
-                                                        reasonController.text,
-                                                    'leaveType': leaveType,
-                                                    'sId': studentId,
-                                                    'sName': studentName,
-                                                    'pName': parentName,
-                                                    'pMobno': parentNo,
-                                                    'sMobno': studentNo,
-                                                    'sEmail': studentEmail,
-                                                    'leaveSubmission':
-                                                        FieldValue
-                                                            .serverTimestamp(),
-                                                    'status': false,
-                                                  }).then((value) {
-                                                    clearField();
-                                                    showSnackbar(
-                                                        "Leave Successfully Submitted");
+                                                      .add(details.toJson()).then((value) {
+                                                    value.update({
+                                                      'leaveId':value.id
+                                                    });
 
+                                                    clearField();
+                                                    showSnackbar("Leave Successfully Submitted");
                                                     Navigator.pop(context);
                                                   });
                                                 },
@@ -616,11 +619,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                                       (typeId == 'multipleday'))
                                                   ? showSnackbar(
                                                       "Please Pick From Date")
-                                                  : ((returnDateController
-                                                                  .text ==
-                                                              '') &&
-                                                          (typeId ==
-                                                              'multipleday'))
+                                                  : ((returnDateController.text == '') && (typeId == 'multipleday'))
                                                       ? showSnackbar(
                                                           "Please Pick Return Date")
                                                       : showSnackbar(
@@ -645,54 +644,137 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('leaveReport')
-                    .where('pMobno', isEqualTo: parentNo)
+                    .where('pMobNo', isEqualTo: parentNo)
+                    .where('delete', isEqualTo: false)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) return const Text('Loading...');
+                  if (!snapshot.hasData)  {
+                    return  const Center(child: CircularProgressIndicator());
+                  }
+                  if(snapshot.data!.docs.isEmpty) {
+                    return  const Center(child: Text('Leave Request is Empty...'));
+                  }
                   final int messageCount = snapshot.data!.docs.length;
                   return ListView.builder(
                     itemCount: messageCount,
                     itemBuilder: (_, int index) {
                       final DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                      return GestureDetector(
-                          onTap: () {
-                            neverSatisfied(
-                                doc['sName'],
-                                doc['leaveType'],
-                                doc['cause'],
-                                doc['noDays'].toString(),
-                                doc['status'] == true ? 'Approved' : 'Pending');
-                          },
-                          child: Column(
-                            children: <Widget>[
-                              const Padding(
-                                padding: EdgeInsets.only(top: 20.0),
+                      return Column(
+                        children: <Widget>[
+                          const Padding(
+                            padding: EdgeInsets.only(top: 20.0),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: SizedBox(
+                                width: 90,
+                                child: Text(doc['status'] == 0 ? 'Pending': doc['status'] == 1 ?'Approved' : 'Disapproved',  style: TextStyle(
+                                    color: Colors.grey[800],
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 18),),
                               ),
-                              Card(
-                                child: ListTile(
-                                  leading: Text(doc['status'] == false
-                                      ? 'Pending'
-                                      : 'Approved'),
-                                  title: Text("Student Name:  ${doc['sName']} "
-                                      "\nLeave Type: ${doc['leaveType']}"
-                                      "\nFrom : ${DateFormat("dd-MM-yyyy").format(doc['fromDate'].toDate())}"
-                                      "\nReturn date : ${DateFormat("dd-MM-yyyy").format(doc['returnDate'].toDate())}"),
-                                  subtitle: Text(
-                                      'Message ${index + 1} of $messageCount\t\t\t\t\t\t\t\t\t\t\t ${DateFormat("dd-MM-yyyy").format(doc['leaveSubmission'].toDate())}',
-                                      style: const TextStyle(
-                                          fontSize: 15.0,
-                                          color: Colors.black38,
-                                          fontStyle: FontStyle.italic)),
-                                ),
+                              title: Text(
+                                  "Student Name : ${doc['sName']} "
+                               "\nLeave Type       : ${doc['leaveType']}"
+                               "\nFrom  : ${DateFormat("dd-MM-yyyy").format(doc['fromD'].toDate())}"
+                               "\nTo       : ${DateFormat("dd-MM-yyyy").format(doc['toD'].toDate())}"),
+                              // subtitle: Text(
+                              //     'Message ${index + 1} of $messageCount\t\t\t\t\t\t\t\t\t\t\t ${DateFormat("dd-MM-yyyy").format(doc['leaveSubmission'].toDate())}',
+                              //     style: const TextStyle(
+                              //         fontSize: 15.0,
+                              //         color: Colors.black38,
+                              //         fontStyle: FontStyle.italic)),
+                              subtitle:  GestureDetector(
+                                onTap: () {
+                                  neverSatisfied(
+                                      doc['sName'],
+                                      doc['leaveType'],
+                                      doc['cause'],
+                                      doc['noDays'] == -1?'Half Day': doc['noDays'] == 1 ?'Full Day' : '${doc['noDays'].toString()} Days',
+                                      doc['status'] == 0 ? 'Pending': doc['status'] == 1 ?'Approved' : 'Disapproved'
+                                  );
+                                },
+                                child: const Text(
+                                    'View More',
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.black38,
+                                        fontStyle: FontStyle.italic)),
                               ),
-                              const Divider(
-                                height: 20.5,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ));
+                            //   trailing: GestureDetector(
+                            //   onTap: (){
+                            //     print('delete in ');
+                            //      AlertDialog(
+                            //       title: const Text('Alert'),
+                            //       content: const Text(
+                            //           'Are you sure you want to delete this Leave Request?'),
+                            //       actions: [
+                            //         TextButton(
+                            //             onPressed: () =>
+                            //                 Navigator.pop(context),
+                            //             child: const Text('Cancel')),
+                            //         TextButton(
+                            //             onPressed: ()  {
+                            //                FirebaseFirestore.instance.collection('leaveReport').doc(doc['leaveId']).delete()
+                            //              .then((value) {
+                            //                 showSnackbar(
+                            //                     "Leave Successfully Deleted");
+                            //                 Navigator.pop(context);
+                            //               });
+                            //             },
+                            //             child: const Text('yes')),
+                            //       ],
+                            //     );
+                            //      setState( () {});
+                            //   },
+                            //   child: Icon(Icons.delete),
+                            // ),
+                              trailing:  doc['status'] == 0 ?GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (buildContext) {
+                                        return  AlertDialog(
+                                          title: const Text('Alert'),
+                                          content: const Text(
+                                              'Are you sure you want to delete this Leave Request?'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: const Text('Cancel')),
+                                            TextButton(
+                                                onPressed: ()  {
+                                                  FirebaseFirestore.instance.collection('leaveReport').doc(doc['leaveId']).update({
+                                                    'delete':true
+                                                  })
+                                                      .then((value) {
+                                                    showSnackbar(
+                                                        "Leave Successfully Deleted");
+                                                    Navigator.pop(context);
+                                                  });
+                                                  setState(() {
+
+                                                  });
+                                                },
+                                                child: const Text('yes')),
+                                          ],
+                                        );
+                                      });
+                                },
+                                child: Icon(Icons.delete),
+                              ):const SizedBox(),
+                            ),
+                          ),
+                          const Divider(
+                            height: 20.5,
+                            color: Colors.black,
+                          ),
+                        ],
+                      );
                     },
                   );
                 },

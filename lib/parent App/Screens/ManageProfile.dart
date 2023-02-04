@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../Authentication/authP.dart';
-import '../Model/userModel.dart';
+import '../Model/leaveModel.dart';
 import '../MainPageP.dart';
 
 String studentId = "";
@@ -17,8 +17,8 @@ class ManageProfile extends StatefulWidget {
 class _ManageProfileState extends State<ManageProfile> {
   Stream<QuerySnapshot<Map<String, dynamic>>>? studentStream = FirebaseFirestore
       .instance
-      .collection('students')
-      .where('pMobno', isEqualTo: pMob)
+      .collection('candidates')
+      .where('guardianNo', isEqualTo: pMob)
       .snapshots();
 
 //   Future<List?> geStudent(String id) async {
@@ -118,7 +118,7 @@ class _ManageProfileState extends State<ManageProfile> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            studentId = data[index]['sId'];
+                            studentId = data[index]['studentId'];
                             print('Student Id = $studentId ');
                             Navigator.push(
                                 context,
@@ -131,11 +131,11 @@ class _ManageProfileState extends State<ManageProfile> {
                             padding: const EdgeInsets.all(16),
                             child: Column(
                               children: [
-                                data[index]['profileImageUrl'] != ''
+                                data[index]['photo'] != ''
                                     ? CircleAvatar(
                                         radius: 40,
                                         backgroundImage: NetworkImage(
-                                            data[index]['profileImageUrl']),
+                                            data[index]['photo']),
                                       )
                                     : CircleAvatar(
                                         radius: 40,
