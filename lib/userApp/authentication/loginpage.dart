@@ -1,36 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:eagles_customer_app/userApp/loginpage.dart';
-import 'package:eagles_customer_app/userApp/otp.dart';
-import 'package:eagles_customer_app/userApp/auth.dart';
-import 'package:eagles_customer_app/userApp/splashScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-import '../main.dart';
+import '../../main.dart';
+import '../../parent App/Authentication/authP.dart';
+import 'loginOtp.dart';
+import 'otp.dart';
 
-TextEditingController contactNumber = TextEditingController();
-
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignUpState extends State<SignUp> {
-  String? verificationId;
-  String? otp, authStatus = "";
+class _LoginPageState extends State<LoginPage> {
+  String? logverificationId;
+  String? oTp, authenStatus = "";
 
-  Future<void> verifyPhoneNumber(BuildContext context) async {
+  Future<void> verifyxPhoneNumber(BuildContext context) async {
     if (kDebugMode) {
-      print(contactNumber.text);
+      print(loginNumber.text);
     }
     await phoneAuth.verifyPhoneNumber(
-      phoneNumber: '+91${contactNumber.text}',
+      phoneNumber: '+91${loginNumber.text}',
       verificationCompleted: (PhoneAuthCredential credential) async {
         if (mounted) {
           showSnackbar(context, 'OTP sent successfully.');
@@ -49,20 +44,20 @@ class _SignUpState extends State<SignUp> {
       },
       codeSent: (String? verficationID, int? resendToken) {
         setState(() {
-          verificationId = verficationID;
+          logverificationId = verficationID;
         });
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => OtpPage(
-                      verId: verificationId!,
-                      number: contactNumber.text,
+                builder: (context) => loginOtp(
+                      verId: logverificationId!,
+                      number: loginNumber.text,
                     )));
       },
       codeAutoRetrievalTimeout: (String verificationID) {
         if (mounted) {
           setState(() {
-            verificationId = verificationID;
+            logverificationId = verificationID;
           });
         }
       },
@@ -76,6 +71,7 @@ class _SignUpState extends State<SignUp> {
 
   String countryCode = 'IN';
   String phoneCode = '+91';
+  TextEditingController loginNumber = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -84,7 +80,7 @@ class _SignUpState extends State<SignUp> {
         resizeToAvoidBottomInset: true,
         // backgroundColor: Colors.red,
         body: Container(
-          padding: const EdgeInsets.all(13),
+          padding: const EdgeInsets.all(30),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -94,20 +90,20 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Center(
                   child: SvgPicture.asset(
-                    'assets/signup.svg',
+                    'assets/login.svg',
                     fit: BoxFit.scaleDown,
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text('Enter Your Mobile',
+                const Text('Welcome',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-                const Text('Number',
+                const Text('Back!',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-                const SizedBox(height: 10),
-                const Text('We will send you a 6 digit OTP on your'),
-                const Text('mobile number for verification'),
+                const SizedBox(height: 15),
+                const Text('We are happy to see you again. To use'),
+                const Text('your account you should login first.'),
                 const SizedBox(height: 20),
                 Row(
                   children: [
@@ -151,7 +147,7 @@ class _SignUpState extends State<SignUp> {
                                   },
                                   // Optional. Sets the theme for the country list picker.
                                   countryListTheme: CountryListThemeData(
-                                    bottomSheetHeight: 500,
+                                    bottomSheetHeight: 5,
 
                                     // Optional. Sets the border radius for the bottomsheet.
                                     borderRadius: const BorderRadius.only(
@@ -180,7 +176,7 @@ class _SignUpState extends State<SignUp> {
                                 keyboardType: TextInputType.number,
                                 maxLines: 1,
                                 maxLength: 10,
-                                controller: contactNumber,
+                                controller: loginNumber,
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
                                 ),
@@ -206,19 +202,18 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(143, 40),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25)),
                             side: const BorderSide(color: Color(0XffE5097F)),
                             backgroundColor: Colors.white),
-                        onPressed: () {
-                          _auth.signInWithGoogle(context);
-                        },
+                        onPressed: () {},
                         child: Row(
                           children: [
                             Container(
@@ -238,36 +233,18 @@ class _SignUpState extends State<SignUp> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25)),
                             side: const BorderSide(color: Color(0XffE5097F)),
-                            minimumSize: const Size(100, 35),
+                            minimumSize: const Size(143, 40),
                             backgroundColor: const Color(0XffE5097F)),
                         onPressed: () async {
-                          verifyPhoneNumber(context);
+                          verifyxPhoneNumber(context);
                           setState(() {});
                         },
                         child: const Text(
-                          'Sign Up',
+                          'Get otp',
                         )),
                   ],
                 ),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Already Have An Account?'),
-                    InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
-                              ));
-                        },
-                        child: const Text(
-                          'Log in',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                  ],
-                )
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -276,24 +253,3 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
-// signInWithGoogle() async {
-//   GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-//   GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-//   AuthCredential credential = GoogleAuthProvider.credential(
-//     accessToken: googleAuth?.accessToken,
-//     idToken: googleAuth?.idToken,
-//   );
-//   UserCredential userCredential =
-//       await FirebaseAuth.instance.signInWithCredential(credential);
-//   var userid = userCredential.user?.uid;
-//   var username = userCredential.user?.displayName;
-//   var userimage = userCredential.user?.photoURL;
-//   var useremail = userCredential.user?.email;
-//
-//   FirebaseFirestore.instance.collection('users').doc(userid).set({
-//     "userid": userid,
-//     "username": username,
-//     "useremail": useremail,
-//     "userimage": userimage,
-//   });
-// }

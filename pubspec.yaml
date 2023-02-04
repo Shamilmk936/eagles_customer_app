@@ -39,10 +39,15 @@ dependencies:
   flutter_svg: ^1.1.6
   country_picker: ^2.0.16
   pinput:
+  google_fonts:
   firebase_auth:
   cloud_firestore: ^4.3.1
   firebase_core: ^2.4.1
   google_sign_in: ^5.4.3
+  carousel_slider: ^4.2.1
+  navigation_tabbar: ^1.0.2
+  video_player: ^2.5.1
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:

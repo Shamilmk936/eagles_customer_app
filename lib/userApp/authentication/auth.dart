@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 var userName;
 var userImage;
 var userEmail;
+var finalUserId;
 var phone;
 String? userDoc;
 Timestamp? dateTime;
@@ -24,6 +25,9 @@ class Authentication {
         await FirebaseAuth.instance.signInWithCredential(credential);
 
     userEmail = userCredential.user?.email;
+    userImage = userCredential.user?.photoURL;
+    finalUserId = userCredential.user?.uid;
+    userName = userCredential.user?.displayName;
     print(userEmail);
 
     try {

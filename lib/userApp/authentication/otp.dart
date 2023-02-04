@@ -1,21 +1,25 @@
-import 'package:eagles_customer_app/userApp/signup.dart';
-import 'package:eagles_customer_app/userApp/signup.dart';
-import 'package:eagles_customer_app/userApp/signup.dart';
+import 'package:eagles_customer_app/globals/firebase_variables.dart';
+import 'package:eagles_customer_app/userApp/authentication/register.dart';
+import 'package:eagles_customer_app/userApp/authentication/signup.dart';
+import 'package:eagles_customer_app/userApp/authentication/signup.dart';
+import 'package:eagles_customer_app/userApp/authentication/signup.dart';
 import 'package:eagles_customer_app/userApp/stage.dart';
-import 'package:eagles_customer_app/userApp/utils.dart';
+import 'package:eagles_customer_app/userApp/authentication/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pinput/pinput.dart';
 
-import '../main.dart';
+import '../../main.dart';
 import 'signup.dart';
 
 class OtpPage extends StatefulWidget {
   final String verId;
   final String number;
-  const OtpPage({Key? key, required this.verId, required this.number})
+  final String name;
+  const OtpPage(
+      {Key? key, required this.verId, required this.number, required this.name})
       : super(key: key);
 
   @override
@@ -123,10 +127,13 @@ class _OtpPageState extends State<OtpPage> {
                           if (kDebugMode) {
                             print(value.user!.uid);
                           }
-                          Navigator.push(
+                          db.collection('onlineStudents').doc().set({
+                            'osName': widget.name,
+                            'mobNo': widget.number,
+                          }).then((value) => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Stage()));
+                                  builder: (context) => const Stage())));
                         }).catchError((e) {
                           if (kDebugMode) {
                             print(e);

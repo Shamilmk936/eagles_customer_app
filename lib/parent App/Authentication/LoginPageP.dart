@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eagles_customer_app/parent%20App/Authentication/otpPageP.dart';
 import 'package:eagles_customer_app/userType.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../main.dart';
-import '../../userApp/otp.dart';
+import '../../userApp/authentication/otp.dart';
 import '../Authentication/authP.dart';
 import '../Model/userModel.dart';
 import '../splashScreenP.dart';
@@ -62,7 +63,7 @@ class _LoginPagePState extends State<LoginPageP> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => OtpPage(
+                builder: (context) => OtpPageP(
                       number: phoneNumber.text,
                       verId: verificationId!,
                     )));

@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eagles_customer_app/parent%20App/splashScreenP.dart';
 import 'package:eagles_customer_app/userApp/homepage.dart';
-import 'package:eagles_customer_app/userApp/otp.dart';
+import 'package:eagles_customer_app/userApp/authentication/otp.dart';
 import 'package:eagles_customer_app/userApp/planSelection.dart';
-import 'package:eagles_customer_app/userApp/signup.dart';
+import 'package:eagles_customer_app/userApp/authentication/signup.dart';
 import 'package:eagles_customer_app/userApp/splashScreen.dart';
 import 'package:eagles_customer_app/userApp/stage.dart';
 import 'package:eagles_customer_app/userType.dart';
@@ -28,6 +29,8 @@ class _StudentAppState extends State<StudentApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // themeMode: ThemeMode.dark,
+
       debugShowCheckedModeBanner: false,
       home: SplashScreenP(),
     );
@@ -45,6 +48,15 @@ showSnackbar(BuildContext context, String content) {
   );
 
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+updateExam(String examId, List completed) async {
+  print("updateExam");
+  await FirebaseFirestore.instance.collection('exams').doc(examId).update({
+    'answerSheet': completed,
+    'status': -1,
+  }).onError((error, stackTrace) => print(error.toString()));
+  print("updateExam end");
 }
 // ElevatedButton(
 // style: ElevatedButton.styleFrom(

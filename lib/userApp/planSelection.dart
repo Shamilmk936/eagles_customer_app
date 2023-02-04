@@ -1,52 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eagles_customer_app/userApp/screens/home/mainPageC.dart';
+import 'package:eagles_customer_app/userApp/stage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
+import '../globals/firebase_variables.dart';
+
 class PlanSelectionPage extends StatefulWidget {
-  const PlanSelectionPage({Key? key}) : super(key: key);
+  String id;
+  int price;
+  PlanSelectionPage({Key? key, required this.id, required this.price})
+      : super(key: key);
 
   @override
   State<PlanSelectionPage> createState() => _PlanSelectionPageState();
 }
 
 class _PlanSelectionPageState extends State<PlanSelectionPage> {
+  bool bColor = false;
+  int sPlan = 0;
+
+  bool isVisible = false;
+  bool istVisible = false;
   DateTime dayss = DateTime.now().add(const Duration(days: 365));
   DateFormat formatter = DateFormat('dd-mm-yyyy');
   // String? dt = formatter.y;
   List plan = [];
-  String? feeOne;
-  String? feeThree;
-  String? feeSix;
-  String? feeYear;
-  String? feeYears;
-  getFee() {
-    // DocumentSnapshot<Map<String, dynamic>> event =
-    FirebaseFirestore.instance
-        .collection('settings')
-        .doc('packages')
-        .snapshots()
-        .listen((event) {
-      if (event.exists) {
-        plan = event.data()!['types'];
-        print(plan);
-        // feeOne = event.data()!['oneMonth'].toString();
-        // feeYear = event.data()!['year'].toString();
-        // feeYears = event.data()!['years'].toString();
-        setState(() {});
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    getFee();
-    super.initState();
-
-    // if (mounted) {
-    //   setState(() {});
-    // }
-  }
+  List stage = [];
+  // String? feeOne;
+  // String? feeThree;
+  // String? feeSix;
+  // String? feeYear;
+  // String? feeYears;
 
   @override
   Widget build(BuildContext context) {
@@ -55,19 +41,28 @@ class _PlanSelectionPageState extends State<PlanSelectionPage> {
     return SafeArea(
         child: Scaffold(
             body: Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               CircleAvatar(
                 child: Center(
-                  child: Icon(Icons.arrow_back),
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back)),
                 ),
               ),
-              Text('Skip')
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MainPageC()));
+                  },
+                  child: Text('Skip'))
             ],
           ),
           const SizedBox(height: 20),
@@ -81,120 +76,52 @@ class _PlanSelectionPageState extends State<PlanSelectionPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                height: h * 0.15,
-                width: w * 0.27,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: const Color(0XFFF3F3F3),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Text(
-                      'Monthly',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const Text(' Valid till',
-                        style: TextStyle(color: Colors.grey)),
-                    Text(
-                      (DateTime.now()
-                          .add(const Duration(days: 30))
-                          .toString()
-                          .substring(0, 10)),
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    Text('₹ ${plan[0]['offer']}',
-                        style: const TextStyle(
-                            color: Color(0xffE5097F),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    Text('₹ ${plan[0]['price']}',
-                        style:
-                            TextStyle(decoration: TextDecoration.lineThrough)),
-                  ],
-                ),
-              ),
-              Container(
-                height: h * 0.15,
-                width: w * 0.27,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: const Color(0XFFF3F3F3),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Text(
-                      'Yearly',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const Text(' Valid till',
-                        style: TextStyle(color: Colors.grey)),
-                    Text(
-                      (DateTime.now()
-                          .add(const Duration(days: 365))
-                          .toString()
-                          .substring(0, 10)),
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    Text('₹ ${plan[4]['offer']}',
-                        style: const TextStyle(
-                            color: Color(0xffE5097F),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    Text('₹ ${plan[4]['price']}',
-                        style:
-                            TextStyle(decoration: TextDecoration.lineThrough)),
-                  ],
-                ),
-              ),
-              Container(
-                height: h * 0.15,
-                width: w * 0.27,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: const Color(0XFFF3F3F3),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Text(
-                      '2 Years',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const Text(' Valid till',
-                        style: TextStyle(color: Colors.grey)),
-                    Text(
-                      (DateTime.now()
-                          .add(const Duration(days: 730))
-                          .toString()
-                          .substring(0, 10)),
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    Text('₹ ${plan[5]['offer']}',
-                        style: const TextStyle(
-                            color: Color(0xffE5097F),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    Text('₹ ${plan[5]['price']}',
-                        style:
-                            TextStyle(decoration: TextDecoration.lineThrough)),
-                  ],
+              InkWell(
+                onTap: () {
+                  sPlan = 1;
+                  bColor = true;
+                  setState(() {});
+                },
+                child: Container(
+                  height: h * 0.15,
+                  width: w * 0.27,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: const Color(0XFFF3F3F3),
+                      border: Border.all(
+                          color: sPlan == 1
+                              ? const Color(0XffE5097F)
+                              : const Color(0xffDADADA)),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        'Yearly',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const Text(' Valid till',
+                          style: TextStyle(color: Colors.grey)),
+                      Text(
+                        (DateTime.now()
+                            .add(const Duration(days: 365))
+                            .toString()
+                            .substring(0, 10)),
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      Text('₹ ${widget.price}',
+                          style: const TextStyle(
+                              color: Color(0xffE5097F),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-          Row(
-            children: [
-              const Text('Show more packages'),
-              IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.arrow_drop_down))
-            ],
-          ),
+          const SizedBox(height: 15),
           Container(
             padding: const EdgeInsets.only(left: 11, right: 11),
             height: h * 0.07,
@@ -224,31 +151,37 @@ class _PlanSelectionPageState extends State<PlanSelectionPage> {
             ),
           ),
           const SizedBox(height: 10),
-          const Spacer(),
-          Container(
-            padding: const EdgeInsets.only(left: 11, right: 11),
-            height: h * 0.07,
-            width: w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: const Color(0XffE5097F),
-                borderRadius: BorderRadius.circular(15)),
-            child: Row(
-              children: [
-                Column(
+          if (sPlan == 0 ? istVisible : !istVisible)
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainPageC(),
+                    ));
+              },
+              child: Container(
+                padding: const EdgeInsets.only(left: 11, right: 11),
+                height: h * 0.07,
+                width: w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: sPlan == 0
+                        ? const Color(0XffE5097F).withOpacity(0.3)
+                        : const Color(0XffE5097F),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Row(
                   children: [
-                    const Text('₹599.00 '),
-                    const Text('You selected monthly plan'),
-                    Column(
-                      children: const [
-                        Text('Pay'),
-                      ],
-                    )
+                    Text(
+                      'GET 12 MONTHS OF PREMIUM @ ₹${widget.price} ',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 15),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
         ],
       ),
     )));

@@ -74,7 +74,7 @@ class _OtpPagePState extends State<OtpPageP> {
                         fontFamily: 'Outfit',
                         fontWeight: FontWeight.w400,
                         fontSize: scrWidth * 0.035,
-                        color: Color(0xff000000).withOpacity(0.5)),
+                        color: const Color(0xff000000).withOpacity(0.5)),
                   ),
                 ],
               ),
@@ -89,7 +89,7 @@ class _OtpPagePState extends State<OtpPageP> {
                       height: scrHeight * 0.06,
                       width: scrWidth * 0.12,
                       decoration: BoxDecoration(
-                          color: Color(0xffEEEEEE),
+                          color: const Color(0xffEEEEEE),
                           borderRadius: BorderRadius.circular(8))),
                   length: 6,
                 ),
@@ -109,7 +109,7 @@ class _OtpPagePState extends State<OtpPageP> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ManageProfile()));
+                            builder: (context) => const ManageProfile()));
                   }).catchError((e) {
                     print(e);
                     showSnackbar(context, 'Wrong OTP!!');
@@ -122,7 +122,7 @@ class _OtpPagePState extends State<OtpPageP> {
                     color: Colors.purpleAccent,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Center(
+                  child: const Center(
                     child:
                         Text("CONTINUE", style: TextStyle(color: Colors.white)),
                   ),
@@ -142,14 +142,14 @@ class _OtpPagePState extends State<OtpPageP> {
 Future<bool?> confirmQuitDialog(BuildContext context) => showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-          title: Text('Do You want to Quit?'),
+          title: const Text('Do You want to Quit?'),
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: Text('No')),
+                child: const Text('No')),
             TextButton(
                 onPressed: () => Navigator.pop(context, true),
-                child: Text(
+                child: const Text(
                   'Yes',
                   style: TextStyle(color: Colors.purpleAccent),
                 )),

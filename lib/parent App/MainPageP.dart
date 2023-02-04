@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../userApp/auth.dart';
-import '../userApp/loginpage.dart';
+import '../userApp/authentication/auth.dart';
+import '../userApp/authentication/loginpage.dart';
 import 'Screens/LeavePage.dart';
 import 'Screens/ManageProfile.dart';
 import 'Screens/ReportsPage.dart';
