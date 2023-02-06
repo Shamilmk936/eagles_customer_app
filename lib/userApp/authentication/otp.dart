@@ -13,9 +13,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../main.dart';
+import '../../splashScreen.dart';
 import 'signup.dart';
-
-String currentUserId = '';
 
 class OtpPage extends StatefulWidget {
   final String verId;
@@ -38,8 +37,8 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   Widget build(BuildContext context) {
-    var h = Utils().getScreenSize().height;
-    var w = Utils().getScreenSize().width;
+     h = Utils().getScreenSize().height;
+     w = Utils().getScreenSize().width;
     //pinTheme
     final defaultPinTheme = PinTheme(
       width: w * 0.2,
@@ -150,15 +149,12 @@ class _OtpPageState extends State<OtpPage> {
                             'mobNo': widget.number,
                             'joinDate': DateTime.now()
                           }).then((value) {
-                            id.reference
-                                .update({'OSId': FieldValue.increment(1)});
+                            id.reference.update({'OSId': FieldValue.increment(1)});
 
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Stage(
-                                          id: currentUserId,
-                                        )));
+                                    builder: (context) => Stage()));
                           });
                         }).catchError((e) {
                           if (kDebugMode) {

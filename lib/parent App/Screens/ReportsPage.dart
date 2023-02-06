@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../main.dart';
+import '../../splashScreen.dart';
 import '../MainPageP.dart';
 
 class ReportsPage extends StatefulWidget {
@@ -11,7 +13,7 @@ class ReportsPage extends StatefulWidget {
 class _ReportsPageState extends State<ReportsPage> {
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
+     h = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

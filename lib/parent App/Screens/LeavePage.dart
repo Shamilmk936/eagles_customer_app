@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+import '../../main.dart';
+import '../../splashScreen.dart';
 import '../Model/leaveModel.dart';
 import '../MainPageP.dart';
 import 'ManageProfile.dart';
@@ -173,8 +175,8 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+     h = MediaQuery.of(context).size.height;
+     w = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,

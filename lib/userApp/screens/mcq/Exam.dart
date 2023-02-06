@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../main.dart';
+import '../../../splashScreen.dart';
 import '../../homepage.dart';
 
 var myColor = const Color(0xFF164679);

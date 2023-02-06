@@ -1,24 +1,32 @@
 import 'dart:async';
 
-import 'package:eagles_customer_app/userApp/authentication/loginpage.dart';
+import 'package:eagles_customer_app/userApp/authentication/loginPage.dart';
+import 'package:eagles_customer_app/userApp/homepage.dart';
 import 'package:eagles_customer_app/userApp/screens/home/mainPageC.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+import '../main.dart';
+
+class SplashScreenS extends StatefulWidget {
+  const SplashScreenS({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreenS> createState() => _SplashScreenSState();
 }
 
-var status;
+class _SplashScreenSState extends State<SplashScreenS> {
 
-class _SplashScreenState extends State<SplashScreen> {
   Future loginEvent() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    status = prefs.getBool('isLoggedIn') ?? false;
+    final preferences = await SharedPreferences.getInstance();
+    if(currentUserId!=null){
+      preferences.setString('userId', currentUserId!);
+    }else{
+      currentUserId = preferences.getString('userId') ?? "";
+    }
+
+    print('UserId : ' + currentUserId!);
     setState(() {});
   }
 
@@ -31,8 +39,11 @@ class _SplashScreenState extends State<SplashScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    status == true ? MainPageC() : LoginPage()),
-            (route) => false);
+                currentUserId == null || currentUserId == ""
+                    ? const HomePage()
+                    : const MainPageC()
+            ),
+                (route) => false);
       });
     });
     super.initState();

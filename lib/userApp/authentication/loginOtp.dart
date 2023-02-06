@@ -11,6 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../main.dart';
+import '../../splashScreen.dart';
 import 'signup.dart';
 
 class loginOtp extends StatefulWidget {
@@ -32,8 +33,8 @@ class _loginOtpState extends State<loginOtp> {
 
   @override
   Widget build(BuildContext context) {
-    var h = Utils().getScreenSize().height;
-    var w = Utils().getScreenSize().width;
+     h = Utils().getScreenSize().height;
+     w = Utils().getScreenSize().width;
     //pinTheme
     final defaultPinTheme = PinTheme(
       width: w * 0.2,
@@ -114,13 +115,10 @@ class _loginOtpState extends State<loginOtp> {
                           minimumSize: Size(w * 0.7, h * 0.05),
                           backgroundColor: const Color(0XffE5097F)),
                       onPressed: () async {
-                        PhoneAuthCredential credential =
-                            PhoneAuthProvider.credential(
+                        PhoneAuthCredential credential = PhoneAuthProvider.credential(
                                 verificationId: widget.verId,
                                 smsCode: otpController.text);
-                        await auth
-                            .signInWithCredential(credential)
-                            .then((value) async {
+                        await auth.signInWithCredential(credential).then((value) async {
                           if (kDebugMode) {
                             print(value.user!.uid);
                           }

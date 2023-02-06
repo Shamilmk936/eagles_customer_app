@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 import '../../userApp/authentication/otp.dart';
 import '../Authentication/authP.dart';
@@ -280,12 +281,15 @@ class _LoginPagePState extends State<LoginPageP> {
 
                           if (_formkey.currentState!.validate()) {
                             if (users.docs.isNotEmpty) {
+                              var parentId = users.docs[0]['pId'];
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              prefs.setString('parentId', parentId);
+                              currentParentId = parentId;
                               verifyPhoneNumber(context);
-                              pMob = phoneNumber.text;
+                              // pMob = phoneNumber.text;
                               loading = true;
                             } else {
-                              showSnackbar(context,
-                                  'Phone Number Is not Registered as Parent');
+                              showSnackbar(context,'Phone Number Is not Registered as Parent');
                             }
                           }
 

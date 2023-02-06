@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 import '../Model/leaveModel.dart';
 import '../Screens/ManageProfile.dart';
@@ -34,13 +35,16 @@ class Authentication {
           .collection('parent')
           .where('email', isEqualTo: userEmail.toString())
           .snapshots()
-          .listen((event) {
+          .listen((event) async {
         if (event.docs.isNotEmpty) {
           print('--------------------Found-----------------------------');
           for (var doc in event.docs) {
             pMob = doc["mobNo"];
             pId = doc["pId"];
           }
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('parentId', pId.toString());
+          currentParentId = pId;
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
@@ -69,6 +73,8 @@ class Authentication {
 }
 
 signOut(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('parentId');
   await listenUserSub?.cancel();
   GoogleSignIn().disconnect();
   await FirebaseAuth.instance

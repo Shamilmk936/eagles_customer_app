@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../main.dart';
+import '../../splashScreen.dart';
 import '../Authentication/authP.dart';
 import '../MainPageP.dart';
 import 'ManageProfile.dart';
@@ -40,8 +42,8 @@ class _HomePagePState extends State<HomePageP> {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+     h = MediaQuery.of(context).size.height;
+     w = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(

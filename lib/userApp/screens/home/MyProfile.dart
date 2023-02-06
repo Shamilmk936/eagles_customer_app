@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../../main.dart';
+import '../../../splashScreen.dart';
 import '../../homepage.dart';
 
 class MyProfile extends StatefulWidget {

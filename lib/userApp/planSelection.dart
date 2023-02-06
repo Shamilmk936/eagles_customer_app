@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 import '../globals/firebase_variables.dart';
+import '../main.dart';
+import '../splashScreen.dart';
 
 class PlanSelectionPage extends StatefulWidget {
   String stage;
@@ -38,8 +40,8 @@ class _PlanSelectionPageState extends State<PlanSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+     h = MediaQuery.of(context).size.height;
+     w = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
             body: Container(

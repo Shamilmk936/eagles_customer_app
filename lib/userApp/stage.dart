@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eagles_customer_app/userApp/authentication/auth.dart';
+import 'package:eagles_customer_app/userApp/authentication/authSignUp.dart';
 import 'package:eagles_customer_app/userApp/model/onlineStudents.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../globals/firebase_variables.dart';
 import '../main.dart';
+import '../splashScreen.dart';
 import 'authentication/routing.dart';
 import 'planSelection.dart';
 
@@ -14,10 +15,8 @@ Map<String, dynamic> stageIdbyName = {};
 var selected;
 
 class Stage extends StatefulWidget {
-  final String id;
   const Stage({
     Key? key,
-    required this.id,
   }) : super(key: key);
 
   @override
@@ -41,8 +40,8 @@ class _StageState extends State<Stage> {
   var stageData;
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+     h = MediaQuery.of(context).size.height;
+     w = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -263,7 +262,7 @@ class _StageState extends State<Stage> {
                           print(currentStudent?.mobNo);
                           await db
                               .collection('onlineStudents')
-                              .doc(widget.id)
+                              .doc(currentUserId)
                               .update({
                             'stage': selected,
                           });
@@ -271,7 +270,7 @@ class _StageState extends State<Stage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlanSelectionPage(
-                                    id: widget.id,
+                                    id: currentUserId ?? '',
                                     stage: selected,
                                     price: price),
                               ));

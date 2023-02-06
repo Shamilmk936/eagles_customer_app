@@ -1,17 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eagles_customer_app/parent%20App/splashScreenP.dart';
+import 'package:eagles_customer_app/splashScreen.dart';
 import 'package:eagles_customer_app/userApp/homepage.dart';
 import 'package:eagles_customer_app/userApp/authentication/otp.dart';
 import 'package:eagles_customer_app/userApp/planSelection.dart';
 import 'package:eagles_customer_app/userApp/authentication/signup.dart';
-import 'package:eagles_customer_app/userApp/splashScreen.dart';
+import 'package:eagles_customer_app/userApp/splashScreenS.dart';
 import 'package:eagles_customer_app/userApp/stage.dart';
 import 'package:eagles_customer_app/userType.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+String? currentUserId;
+String? currentParentId;
+
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -31,11 +36,12 @@ class StudentApp extends StatefulWidget {
 class _StudentAppState extends State<StudentApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+
+    return  MaterialApp(
       // themeMode: ThemeMode.dark,
 
       debugShowCheckedModeBanner: false,
-      home: SplashScreenP(),
+      home: SplashScreen(),
     );
   }
 }

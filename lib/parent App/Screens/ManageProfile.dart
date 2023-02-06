@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eagles_customer_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../splashScreen.dart';
 import '../Authentication/authP.dart';
 import '../Model/leaveModel.dart';
 import '../MainPageP.dart';
@@ -18,7 +20,7 @@ class _ManageProfileState extends State<ManageProfile> {
   Stream<QuerySnapshot<Map<String, dynamic>>>? studentStream = FirebaseFirestore
       .instance
       .collection('candidates')
-      .where('guardianNo', isEqualTo: pMob)
+      .where('parentId', isEqualTo: currentParentId)
       .snapshots();
 
 //   Future<List?> geStudent(String id) async {
@@ -64,8 +66,8 @@ class _ManageProfileState extends State<ManageProfile> {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+     h = MediaQuery.of(context).size.height;
+     w = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(

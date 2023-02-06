@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../main.dart';
+import '../../splashScreen.dart';
 import '../MainPageP.dart';
 
 class AttendancePage extends StatefulWidget {
@@ -26,8 +28,8 @@ class _AttendancePageState extends State<AttendancePage>
   }
 
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+     h = MediaQuery.of(context).size.height;
+     w = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,

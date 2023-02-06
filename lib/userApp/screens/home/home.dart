@@ -3,15 +3,17 @@ import 'package:eagles_customer_app/userApp/authentication/otp.dart';
 import 'package:eagles_customer_app/userApp/model/onlineStudents.dart';
 import 'package:eagles_customer_app/userApp/premium/moduleList.dart';
 import 'package:eagles_customer_app/userApp/screens/home/homeList.dart';
-import 'package:eagles_customer_app/userApp/splashScreen.dart';
+import 'package:eagles_customer_app/userApp/splashScreenS.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../globals/firebase_variables.dart';
+import '../../../main.dart';
 import '../../../parent App/Authentication/authP.dart';
 import '../../../parent App/MainPageP.dart';
-import '../../authentication/auth.dart';
-import '../../authentication/loginpage.dart';
+import '../../../splashScreen.dart';
+import '../../authentication/authSignUp.dart';
+import '../../authentication/loginPage.dart';
 import '../../homepage.dart';
 
 int? currentTopic;
@@ -59,7 +61,7 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     print(currentUserId);
     return Scaffold(
-        endDrawer: Drawer(
+        drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
@@ -70,11 +72,11 @@ class _MyHomeState extends State<MyHome> {
                       topRight: Radius.circular(35)),
                   color: Colors.blueGrey,
                 ),
-                accountName: Text(studentName),
-                accountEmail: Text(studentEmail),
+                accountName: Text(currentStudent?.sName ?? ''),
+                accountEmail: Text(currentStudent?.email ?? ''),
                 currentAccountPicture: CircleAvatar(
                   radius: 40,
-                  backgroundImage: NetworkImage(urlDp),
+                  backgroundImage: NetworkImage(currentStudent?.profile ?? ''),
                 ),
               ),
               ListTile(
@@ -145,7 +147,7 @@ class _MyHomeState extends State<MyHome> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SplashScreen()));
+                              builder: (context) => const SplashScreenS()));
                     });
                   }),
             ], //hhhhh
@@ -158,7 +160,7 @@ class _MyHomeState extends State<MyHome> {
                 actions: [
                   GestureDetector(
                     onTap: () {
-                      Scaffold.of(context).openEndDrawer();
+                      Scaffold.of(context).openDrawer();
                     },
                     child: CircleAvatar(
                       radius: 18,
@@ -181,7 +183,7 @@ class _MyHomeState extends State<MyHome> {
                         Text('Good Day',
                             style: TextStyle(
                                 fontSize: 15, color: Color(0xff121212))),
-                        Text('${currentStudent?.sName}',
+                        Text(currentStudent?.sName ?? '',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,

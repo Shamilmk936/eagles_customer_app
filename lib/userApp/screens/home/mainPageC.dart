@@ -5,8 +5,9 @@ import 'package:eagles_customer_app/userApp/screens/mcq/mcqList.dart';
 import 'package:eagles_customer_app/userApp/screens/home/home.dart';
 
 import 'package:flutter/material.dart';
-import '../../authentication/auth.dart';
-import '../../authentication/loginpage.dart';
+import '../../../main.dart';
+import '../../authentication/authSignUp.dart';
+import '../../authentication/loginPage.dart';
 import '../../authentication/otp.dart';
 import '../../model/onlineStudents.dart';
 
@@ -26,7 +27,7 @@ class MainPageC extends StatefulWidget {
 
 //hhhhh
 class _MainPageCState extends State<MainPageC> {
-  @override
+
   getOnlineStudent() async {
     print('inside   get help');
     print(currentUserId);
@@ -36,38 +37,21 @@ class _MainPageCState extends State<MainPageC> {
         .doc(currentUserId)
         .snapshots()
         .listen((event) async {
-      print('event');
+      print('-------------------------------------------events------------------------------------');
       print(event.data());
 
-      currentStudent = await OSModel.fromJson(event.data()!);
+      currentStudent =  OSModel.fromJson(event.data()!);
       currentTopic = currentStudent?.currentTopic;
       currentModule = currentStudent?.currentModule;
       currentLesson = currentStudent?.currentLesson;
       print(currentStudent?.currentModule);
       print(currentModule);
       print(currentStudent?.OSId);
-      print('1234567890');
+
 
       setState(() {});
     });
   }
-  // getStudent() async {
-  //   FirebaseFirestore.instance
-  //       .collection('students')
-  //       .doc(studentId)
-  //       .snapshots()
-  //       .listen((event) {
-  //     if (event.exists) {
-  //       studentName = event['name'];
-  //       parentName = event['pName'];
-  //       parentNo = event['pMobno'];
-  //       studentNo = event['sMobno'];
-  //       studentEmail = event['sEmail'];
-  //       urlDp = event['profileImageUrl'];
-  //     }
-  //     setState(() {});
-  //   });
-  // }
 
   int _selectedIndex = 0;
   var visiblecheck = true;

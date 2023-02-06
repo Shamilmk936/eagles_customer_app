@@ -1,19 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:eagles_customer_app/parent%20App/Authentication/otpPageP.dart';
-import 'package:eagles_customer_app/userApp/authentication/loginpage.dart';
 import 'package:eagles_customer_app/userApp/authentication/otp.dart';
-import 'package:eagles_customer_app/userApp/authentication/auth.dart';
-import 'package:eagles_customer_app/userApp/splashScreen.dart';
+import 'package:eagles_customer_app/userApp/authentication/authSignUp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../globals/firebase_variables.dart';
 import '../../main.dart';
+import '../../splashScreen.dart';
 import '../homepage.dart';
+import 'loginPage.dart';
 
 TextEditingController contactNumber = TextEditingController();
 
@@ -78,7 +75,6 @@ class _SignUpState extends State<SignUp> {
   }
 
   final FirebaseAuth phoneAuth = FirebaseAuth.instance;
-
   final Authentication _auth = Authentication();
 
   String countryCode = 'IN';
@@ -88,7 +84,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
+     h = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -236,15 +232,13 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () async {
                       QuerySnapshot users = await db
                           .collection('onlineStudents')
-                          .where('mobNo', isNotEqualTo: contactNumber.text)
+                          .where('mobNo', isEqualTo: contactNumber.text)
                           .get();
-
                       if (users.docs.isNotEmpty) {
-                        verifyPhoneNumber(context);
-                      } else {
                         showSnackbar(context, "You have already registered");
+                      } else {
+                        verifyPhoneNumber(context);
                       }
-//hhhhh
                       setState(() {});
                     },
                     child: const Text('Sign Up')),

@@ -1,5 +1,5 @@
 import 'package:eagles_customer_app/globals/firebase_variables.dart';
-import 'package:eagles_customer_app/userApp/authentication/loginpage.dart';
+import 'package:eagles_customer_app/userApp/authentication/loginPage.dart';
 import 'package:eagles_customer_app/userApp/model/onlineStudents.dart';
 import 'package:eagles_customer_app/userApp/screens/home/mainPageC.dart';
 import 'package:eagles_customer_app/userApp/screens/mcq/mcq.dart';
@@ -7,9 +7,6 @@ import 'package:eagles_customer_app/userApp/authentication/signup.dart';
 import 'package:eagles_customer_app/userApp/stage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-var h;
-var w;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -31,9 +28,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Stage(
-                          id: '',
-                        ),
+                        builder: (context) => Stage(),
                       ));
                 },
                 icon: Icon(Icons.account_tree_sharp))

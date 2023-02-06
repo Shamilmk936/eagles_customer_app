@@ -3,7 +3,7 @@ import 'package:eagles_customer_app/parent%20App/splashScreenP.dart';
 import 'package:eagles_customer_app/userApp/authentication/routing.dart';
 import 'package:eagles_customer_app/userApp/authentication/signup.dart';
 import 'package:eagles_customer_app/userApp/homepage.dart';
-import 'package:eagles_customer_app/userApp/splashScreen.dart';
+import 'package:eagles_customer_app/userApp/splashScreenS.dart';
 import 'package:flutter/material.dart';
 
 class UserType extends StatefulWidget {
@@ -34,7 +34,7 @@ class _UserTypeState extends State<UserType> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return const SplashScreen();
+                          return const SplashScreenS();
                         },
                       ));
                     },
@@ -52,7 +52,7 @@ class _UserTypeState extends State<UserType> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return const LoginPageP();
+                          return const SplashScreenP();
                         },
                       ));
                     },

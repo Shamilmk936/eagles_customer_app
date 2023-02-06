@@ -1,17 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:eagles_customer_app/userApp/authentication/auth.dart';
-import 'package:eagles_customer_app/userApp/authentication/auth2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../globals/firebase_variables.dart';
 import '../../main.dart';
+import '../../splashScreen.dart';
+import 'authLogin.dart';
 import 'loginOtp.dart';
-import 'otp.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,7 +21,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String? logverificationId;
   String? oTp, authenStatus = "";
-//hhhhh
+
   Future<void> verifyxPhoneNumber(BuildContext context) async {
     if (kDebugMode) {
       print(loginNumber.text);
@@ -70,15 +68,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   final FirebaseAuth phoneAuth = FirebaseAuth.instance;
-
-  final Authentications _auths = Authentications();
+  final Authentication _auths = Authentication();
 
   String countryCode = 'IN';
   String phoneCode = '+91';
   TextEditingController loginNumber = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
+     h = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -248,9 +245,10 @@ class _LoginPageState extends State<LoginPage> {
                               .get();
 
                           if (users.docs.isNotEmpty) {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setBool("isLoggedIn", true);
+                            var OsId = users.docs[0]['OSId'];
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            prefs.setString('userId', OsId);
+                            currentUserId = OsId;
                             verifyxPhoneNumber(context);
                           } else {
                             showSnackbar(context, "You have'nt registered yet");

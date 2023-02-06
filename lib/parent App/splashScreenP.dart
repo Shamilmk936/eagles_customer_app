@@ -1,11 +1,13 @@
 import 'dart:async';
-
-import 'package:eagles_customer_app/parent%20App/Authentication/LoginPageP.dart';
-import 'package:eagles_customer_app/userType.dart';
+import 'package:eagles_customer_app/parent%20App/Screens/ManageProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../main.dart';
+import '../splashScreen.dart';
 import '../userApp/homepage.dart';
-import 'Authentication/root.dart';
+import 'Authentication/LoginPageP.dart';
+
 
 var scrHeight;
 var scrWidth;
@@ -18,18 +20,36 @@ class SplashScreenP extends StatefulWidget {
 }
 
 class _SplashScreenPState extends State<SplashScreenP> {
+
+  Future loginEvent() async {
+
+    final preferences = await SharedPreferences.getInstance();
+    if(currentParentId!=null){
+      preferences.setString('parentId', currentParentId!);
+    }else{
+      currentParentId = preferences.getString('parentId') ?? "";
+    }
+
+    print('UserId : ' + currentParentId!);
+    setState(() {});
+  }
+
   @override
   void initState() {
-    super.initState();
-
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const UserType(),
-          ),
-          (route) => false);
+    loginEvent().whenComplete(() async {
+      Timer(const Duration(seconds: 3), () {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                currentParentId == null || currentParentId == ""
+                    ? const LoginPageP()
+                    : const ManageProfile()
+            ),
+                (route) => false);
+      });
     });
+    super.initState();
   }
 
   @override
