@@ -148,7 +148,6 @@ class _MyHomeState extends State<MyHome> {
                               builder: (context) => const SplashScreen()));
                     });
                   }),
-
             ],
           ),
         ),

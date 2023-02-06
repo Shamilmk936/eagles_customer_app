@@ -37,8 +37,6 @@ class _ModuleListState extends State<ModuleList> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     print(currentModule);

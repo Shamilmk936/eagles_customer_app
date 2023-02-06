@@ -15,10 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(const StudentApp());
 }
@@ -39,8 +37,6 @@ class _StudentAppState extends State<StudentApp> {
       debugShowCheckedModeBanner: false,
       home: SplashScreenP(),
     );
-
-
   }
 }
 

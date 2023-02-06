@@ -25,9 +25,6 @@ class _FullScreenState extends State<FullScreen> {
     super.initState();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -46,7 +46,6 @@ class _MyProfileState extends State<MyProfile> {
                 shrinkWrap: true,
                 itemCount: 4,
                 itemBuilder: (context, index) {
-
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 18.0),
                     child: Container(

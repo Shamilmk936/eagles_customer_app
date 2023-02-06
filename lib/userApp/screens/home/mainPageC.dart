@@ -26,7 +26,6 @@ class MainPageC extends StatefulWidget {
 
 class _MainPageCState extends State<MainPageC> {
   @override
-
   getOnlineStudent() async {
     print('inside   get help');
     print(currentUserId);

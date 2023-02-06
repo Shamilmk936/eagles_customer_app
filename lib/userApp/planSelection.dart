@@ -150,8 +150,6 @@ class _PlanSelectionPageState extends State<PlanSelectionPage> {
                       color: Color(0xffE5097F),
                     ))
               ],
-
-
             ),
           ),
           const SizedBox(height: 10),
