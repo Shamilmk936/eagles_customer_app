@@ -1,5 +1,7 @@
 import 'package:eagles_customer_app/parent%20App/Authentication/LoginPageP.dart';
 import 'package:eagles_customer_app/parent%20App/splashScreenP.dart';
+import 'package:eagles_customer_app/userApp/authentication/routing.dart';
+import 'package:eagles_customer_app/userApp/authentication/signup.dart';
 import 'package:eagles_customer_app/userApp/homepage.dart';
 import 'package:eagles_customer_app/userApp/splashScreen.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,7 @@ class _UserTypeState extends State<UserType> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return HomePage();
+                          return SplashScreen();
                         },
                       ));
                     },

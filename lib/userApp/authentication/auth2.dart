@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eagles_customer_app/userApp/homepage.dart';
+import 'package:eagles_customer_app/userApp/screens/home/mainPageC.dart';
 import 'package:eagles_customer_app/userApp/stage.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../globals/firebase_variables.dart';
 import '../../main.dart';
@@ -18,9 +20,9 @@ var phone;
 String? userDoc;
 Timestamp? dateTime;
 
-class Authentication {
+class Authentications {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  signInWithGoogle(BuildContext context) async {
+  signInxWithGoogle(BuildContext context) async {
     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
@@ -36,7 +38,7 @@ class Authentication {
     DocumentSnapshot id = await db.collection('settings').doc('settings').get();
     var user = id["OSId"].toString();
     var uid = 'OS$user';
-
+    currentUserId = uid;
     db.collection('onlineStudents').doc(uid).set({
       "OSId": uid,
       "Name": userName,
@@ -56,22 +58,24 @@ class Authentication {
     try {
       print('---------------ew----------------------');
 
-      await FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection('onlineStudents')
-          .where('email', isNotEqualTo: userEmail.toString())
+          .where('email', isEqualTo: userEmail.toString())
           .snapshots()
-          .listen((event) {
+          .listen((event) async {
         if (event.docs.isNotEmpty) {
           print('--------------------Found-----------------------------');
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool("isLoggedIn", true);
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => Stage(id: uid),
+                builder: (context) => MainPageC(),
               ),
               (route) => false);
         } else {
           print('--------------------Not Found-----------------------------');
-          showSnackbar(context, 'User already exist');
+          showSnackbar(context, 'No such User found');
           signsOut(context);
         }
       });
@@ -85,6 +89,8 @@ class Authentication {
 
 signsOut(BuildContext context) async {
   // await listenUserSub?.cancel();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('isLoggedIn');
   GoogleSignIn().disconnect();
   await FirebaseAuth.instance
       .signOut()

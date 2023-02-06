@@ -1,19 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eagles_customer_app/userApp/authentication/auth.dart';
+import 'package:eagles_customer_app/userApp/model/onlineStudents.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../globals/firebase_variables.dart';
 import '../main.dart';
+import 'authentication/routing.dart';
 import 'planSelection.dart';
 
 Map<String, dynamic> stageIdbyName = {};
 var selected;
 
 class Stage extends StatefulWidget {
+  final String id;
   const Stage({
     Key? key,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -21,6 +25,13 @@ class Stage extends StatefulWidget {
 }
 
 class _StageState extends State<Stage> {
+  @override
+  void initState() {
+    print('-----------------------------');
+    print(currentStudent);
+    super.initState();
+  }
+
   bool bColor = false;
   int stages = 0;
   String selected = '';
@@ -242,25 +253,27 @@ class _StageState extends State<Stage> {
                           backgroundColor: selected == ''
                               ? const Color(0XffE5097F).withOpacity(0.3)
                               : const Color(0XffE5097F)),
-                      onPressed: () {
+                      onPressed: () async {
                         print(selected);
                         if (selected == '') {
                           showSnackbar(context, 'Please pick a stage');
                         } else {
+                          print(currentStudent?.OSId);
+                          print(currentStudent?.mobNo);
+                          await db
+                              .collection('onlineStudents')
+                              .doc(widget.id)
+                              .update({
+                            'stage': selected,
+                          });
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlanSelectionPage(
-                                    id: selected, price: price),
+                                    id: widget.id,
+                                    stage: selected,
+                                    price: price),
                               ));
-                          // db.collection('onlineStudents').doc(selected).update({
-                          //   'stage': selected,
-                          // }).then((value) => Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => PlanSelectionPage(
-                          //           id: selected, price: price),
-                          //     )));
                         }
                       },
                       child: const Text(

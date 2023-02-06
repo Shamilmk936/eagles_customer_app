@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:eagles_customer_app/userApp/authentication/auth.dart';
+import 'package:eagles_customer_app/userApp/authentication/auth2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../globals/firebase_variables.dart';
 import '../../main.dart';
-import '../../parent App/Authentication/authP.dart';
 import 'loginOtp.dart';
 import 'otp.dart';
 
@@ -67,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final FirebaseAuth phoneAuth = FirebaseAuth.instance;
 
-  final Authentication _auth = Authentication();
+  final Authentications _auths = Authentications();
 
   String countryCode = 'IN';
   String phoneCode = '+91';
@@ -213,7 +217,9 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(25)),
                             side: const BorderSide(color: Color(0XffE5097F)),
                             backgroundColor: Colors.white),
-                        onPressed: () {},
+                        onPressed: () {
+                          _auths.signInxWithGoogle(context);
+                        },
                         child: Row(
                           children: [
                             Container(
@@ -236,7 +242,20 @@ class _LoginPageState extends State<LoginPage> {
                             minimumSize: const Size(143, 40),
                             backgroundColor: const Color(0XffE5097F)),
                         onPressed: () async {
-                          verifyxPhoneNumber(context);
+                          QuerySnapshot users = await db
+                              .collection('onlineStudents')
+                              .where('mobNo', isEqualTo: loginNumber.text)
+                              .get();
+
+                          if (users.docs.isNotEmpty) {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setBool("isLoggedIn", true);
+                            verifyxPhoneNumber(context);
+                          } else {
+                            showSnackbar(context, "You have'nt registered yet");
+                          }
+
                           setState(() {});
                         },
                         child: const Text(

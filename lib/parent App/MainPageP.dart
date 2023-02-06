@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../userApp/authentication/auth.dart';
+
 import '../userApp/authentication/loginpage.dart';
+import 'Authentication/LoginPageP.dart';
+import 'Authentication/authP.dart';
+import 'Screens/AttendancePage.dart';
+import 'Screens/HomePageP.dart';
 import 'Screens/LeavePage.dart';
 import 'Screens/ManageProfile.dart';
 import 'Screens/ReportsPage.dart';
-import 'Screens/AttendancePage.dart';
-import 'Screens/HomePageP.dart';
 
 String studentName = "";
 String parentName = "";
@@ -183,7 +185,7 @@ class _MainPagePState extends State<MainPageP> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
+                              builder: (context) => const LoginPageP()));
                     });
                   }),
             ],

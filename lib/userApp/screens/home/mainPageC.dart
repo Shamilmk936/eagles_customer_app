@@ -7,6 +7,8 @@ import 'package:eagles_customer_app/userApp/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import '../../authentication/auth.dart';
 import '../../authentication/loginpage.dart';
+import '../../authentication/otp.dart';
+import '../../model/onlineStudents.dart';
 
 String studentName = "";
 String parentName = "";
@@ -24,14 +26,30 @@ class MainPageC extends StatefulWidget {
 
 class _MainPageCState extends State<MainPageC> {
   @override
-  // void initState() {
-  //   getStudent();
-  //   print('MainPage');
-  //   // print(studentId);
-  //   print(studentName);
-  //   super.initState();
-  // }
+  getOnlineStudent() async {
+    print('inside   get help');
+    print(currentUserId);
+    print('currentUserId');
+    FirebaseFirestore.instance
+        .collection("onlineStudents")
+        .doc(currentUserId)
+        .snapshots()
+        .listen((event) async {
+      print('event');
+      print(event.data());
 
+      currentStudent = await OSModel.fromJson(event.data()!);
+      currentTopic = currentStudent?.currentTopic;
+      currentModule = currentStudent?.currentModule;
+      currentLesson = currentStudent?.currentLesson;
+      print(currentStudent?.currentModule);
+      print(currentModule);
+      print(currentStudent?.OSId);
+      print('1234567890');
+
+      setState(() {});
+    });
+  }
   // getStudent() async {
   //   FirebaseFirestore.instance
   //       .collection('students')
@@ -66,12 +84,20 @@ class _MainPageCState extends State<MainPageC> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    getOnlineStudent();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // if (_selectedIndex == 3 || _selectedIndex == 1) {
     //   setState(() {
     //     visiblecheck = false;
     //   });
     // }
+    print(currentUserId);
     return SafeArea(
       child: Scaffold(
         body: SafeArea(

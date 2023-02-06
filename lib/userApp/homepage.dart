@@ -1,4 +1,6 @@
+import 'package:eagles_customer_app/globals/firebase_variables.dart';
 import 'package:eagles_customer_app/userApp/authentication/loginpage.dart';
+import 'package:eagles_customer_app/userApp/model/onlineStudents.dart';
 import 'package:eagles_customer_app/userApp/screens/home/mainPageC.dart';
 import 'package:eagles_customer_app/userApp/screens/mcq/mcq.dart';
 import 'package:eagles_customer_app/userApp/authentication/signup.dart';
@@ -19,8 +21,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    h = MediaQuery.of(context).size.height;
-    w = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -30,7 +30,9 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Stage(),
+                        builder: (context) => Stage(
+                          id: '',
+                        ),
                       ));
                 },
                 icon: Icon(Icons.account_tree_sharp))

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../globals/firebase_variables.dart';
 import '../../main.dart';
 import '../homepage.dart';
 
@@ -233,13 +234,18 @@ class _SignUpState extends State<SignUp> {
                         minimumSize: const Size(100, 35),
                         backgroundColor: const Color(0XffE5097F)),
                     onPressed: () async {
-                      if (fullName.text.isNotEmpty &&
-                          contactNumber.text.length == 10) {
+                      QuerySnapshot users = await db
+                          .collection('onlineStudents')
+                          .where('mobNo', isNotEqualTo: contactNumber.text)
+                          .get();
+
+                      if (users.docs.isNotEmpty) {
                         verifyPhoneNumber(context);
-                        setState(() {});
                       } else {
-                        showSnackbar(context, 'Enter your details please');
+                        showSnackbar(context, "You have already registered");
                       }
+
+                      setState(() {});
                     },
                     child: const Text('Sign Up')),
                 const SizedBox(height: 20),
@@ -302,7 +308,7 @@ class _SignUpState extends State<SignUp> {
                             side: const BorderSide(color: Color(0XffE5097F)),
                             backgroundColor: Colors.white),
                         onPressed: () {
-                          _auth.signInWithGoogle(context);
+                          // _auth.signInWithGoogle(context);
                         },
                         child: Row(
                           children: [
@@ -313,7 +319,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             const SizedBox(width: 10),
                             const Text(
-                              'Google',
+                              'Apple',
                               style: TextStyle(color: Colors.black),
                             ),
                           ],

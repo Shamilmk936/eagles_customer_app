@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eagles_customer_app/globals/firebase_variables.dart';
 import 'package:eagles_customer_app/userApp/authentication/register.dart';
 import 'package:eagles_customer_app/userApp/authentication/signup.dart';
@@ -13,6 +14,8 @@ import 'package:pinput/pinput.dart';
 
 import '../../main.dart';
 import 'signup.dart';
+
+String currentUserId = '';
 
 class OtpPage extends StatefulWidget {
   final String verId;
@@ -127,13 +130,36 @@ class _OtpPageState extends State<OtpPage> {
                           if (kDebugMode) {
                             print(value.user!.uid);
                           }
-                          db.collection('onlineStudents').doc().set({
+                          DocumentSnapshot id = await db
+                              .collection('settings')
+                              .doc('settings')
+                              .get();
+                          var user = id["OSId"].toString();
+                          var uid = 'OS$user';
+                          currentUserId = uid;
+                          db.collection('onlineStudents').doc(uid).set({
                             'osName': widget.name,
+                            'OSId': uid,
+                            'stage': "",
+                            'plan': "",
+                            'profile': "",
+                            'email': "",
+                            'currentLesson': 1,
+                            'currentModule': 1,
+                            'currentTopic': 1,
                             'mobNo': widget.number,
-                          }).then((value) => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Stage())));
+                            'joinDate': DateTime.now()
+                          }).then((value) {
+                            id.reference
+                                .update({'OSId': FieldValue.increment(1)});
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Stage(
+                                          id: currentUserId,
+                                        )));
+                          });
                         }).catchError((e) {
                           if (kDebugMode) {
                             print(e);

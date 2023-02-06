@@ -4,6 +4,7 @@ import 'package:eagles_customer_app/parent%20App/Authentication/LoginPageP.dart'
 import 'package:eagles_customer_app/userType.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../userApp/homepage.dart';
 import 'Authentication/root.dart';
 
 var scrHeight;
@@ -35,7 +36,8 @@ class _SplashScreenPState extends State<SplashScreenP> {
   Widget build(BuildContext context) {
     scrWidth = MediaQuery.of(context).size.width;
     scrHeight = MediaQuery.of(context).size.height;
-
+    h = MediaQuery.of(context).size.height;
+    w = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: Column(

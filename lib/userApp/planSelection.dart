@@ -8,9 +8,11 @@ import 'package:intl/intl.dart';
 import '../globals/firebase_variables.dart';
 
 class PlanSelectionPage extends StatefulWidget {
-  String id;
+  String stage;
+  final String id;
   int price;
-  PlanSelectionPage({Key? key, required this.id, required this.price})
+  PlanSelectionPage(
+      {Key? key, required this.stage, required this.price, required this.id})
       : super(key: key);
 
   @override
@@ -153,7 +155,10 @@ class _PlanSelectionPageState extends State<PlanSelectionPage> {
           const SizedBox(height: 10),
           if (sPlan == 0 ? istVisible : !istVisible)
             InkWell(
-              onTap: () {
+              onTap: () async {
+                await db.collection('onlineStudents').doc(widget.id).update({
+                  'plan': widget.price,
+                });
                 Navigator.push(
                     context,
                     MaterialPageRoute(

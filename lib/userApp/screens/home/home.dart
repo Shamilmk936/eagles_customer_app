@@ -1,13 +1,22 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eagles_customer_app/userApp/authentication/otp.dart';
+import 'package:eagles_customer_app/userApp/model/onlineStudents.dart';
+import 'package:eagles_customer_app/userApp/premium/moduleList.dart';
 import 'package:eagles_customer_app/userApp/screens/home/homeList.dart';
+import 'package:eagles_customer_app/userApp/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../globals/firebase_variables.dart';
 import '../../../parent App/Authentication/authP.dart';
 import '../../../parent App/MainPageP.dart';
+import '../../authentication/auth.dart';
 import '../../authentication/loginpage.dart';
 import '../../homepage.dart';
+
+int? currentTopic;
+int? currentModule;
+int? currentLesson;
 
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -18,25 +27,37 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   List module = [];
-  getVideo() {
+  List topic = [];
+
+  getTopics() async {
+    topic = [];
+    print(currentStudent?.stage);
+    while (currentStudent?.stage == null ||
+        currentStudent?.stage == '' ||
+        currentStudent?.stage == 'null') {
+      await Future.delayed(Duration(seconds: 1));
+    }
     db
-        .collection('course')
-        .doc('lzX1QMIxoOMrdZqS9tMF')
+        .collection('topic')
+        .where('stage', isEqualTo: currentStudent?.stage)
+        // .orderBy('sNo', descending: true)
         .snapshots()
         .listen((event) {
-      module = event.data()!['module'];
-      print(module);
+      topic = event.docs;
+      print(topic);
+      setState(() {});
     });
   }
 
   @override
   void initState() {
-    getVideo();
+    getTopics();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(currentUserId);
     return Scaffold(
         endDrawer: Drawer(
           child: ListView(
@@ -120,11 +141,11 @@ class _MyHomeState extends State<MyHome> {
                   title: Text('Log Out'),
                   onTap: () {
                     setState(() {
-                      signOut(context);
+                      signsOut(context);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
+                              builder: (context) => const SplashScreen()));
                     });
                   }),
             ],
@@ -160,7 +181,7 @@ class _MyHomeState extends State<MyHome> {
                         Text('Good Day',
                             style: TextStyle(
                                 fontSize: 15, color: Color(0xff121212))),
-                        Text('Smijith N Vasudev',
+                        Text('${currentStudent?.sName}',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
@@ -316,12 +337,13 @@ class _MyHomeState extends State<MyHome> {
                 SizedBox(height: h * 0.02),
                 Container(
                   padding: EdgeInsets.only(top: 5),
-                  height: h * 0.22,
-                  width: w * 0.9,
+                  // height: h * 0.22,
+                  // width: w * 0.9,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(11),
                       border: Border.all(color: Color(0xffE1E1E1))),
                   child: GridView.builder(
+                      shrinkWrap: true,
                       primary: false,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -329,20 +351,35 @@ class _MyHomeState extends State<MyHome> {
                           childAspectRatio: 3 / 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10),
-                      itemCount: studyList.length,
+                      itemCount: topic.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return Column(
                           children: [
-                            CircleAvatar(
-                              radius: 24,
-                              backgroundColor: Color(0xffF3F3F3),
-                              child: SvgPicture.asset(
-                                'assets/exams.svg',
-                                width: 23,
-                              ),
-                            ),
+                            currentTopic! >= topic[index]['sNo']
+                                ? InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ModuleList(
+                                                  topic: topic[index].data())));
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 24,
+                                      backgroundColor: Color(0xffF3F3F3),
+                                      child: SvgPicture.asset(
+                                        'assets/exams.svg',
+                                        width: 23,
+                                      ),
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 24,
+                                    backgroundColor: Color(0xffF3F3F3),
+                                    child: Icon(Icons.error),
+                                  ),
                             SizedBox(height: 5),
-                            Text(studyList[index]['name'],
+                            Text(topic[index]['topicName'],
                                 style: TextStyle(fontSize: 12))
                           ],
                         );
