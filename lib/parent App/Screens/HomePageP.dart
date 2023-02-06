@@ -81,7 +81,7 @@ class _HomePagePState extends State<HomePageP> {
       body: Center(
         child: Column(
           children: [
-            Text('Current Student : $studentName'),
+            // Text('Current Student : $studentName'),
             SizedBox(
               height: 300,
               width: 300,

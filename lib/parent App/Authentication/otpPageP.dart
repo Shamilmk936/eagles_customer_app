@@ -105,7 +105,6 @@ class _OtpPagePState extends State<OtpPageP> {
                       .signInWithCredential(credential)
                       .then((value) async {
                     print(value.user!.uid);
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -119,7 +118,7 @@ class _OtpPagePState extends State<OtpPageP> {
                   height: scrHeight * 0.055,
                   width: scrWidth * 0.87,
                   decoration: BoxDecoration(
-                    color: Colors.purpleAccent,
+                    color: const Color(0xffE5097F),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(

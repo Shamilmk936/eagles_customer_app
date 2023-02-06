@@ -36,17 +36,17 @@ class _MainPagePState extends State<MainPageP> {
 
   getStudent() async {
     FirebaseFirestore.instance
-        .collection('students')
+        .collection('candidates')
         .doc(studentId)
         .snapshots()
         .listen((event) {
       if (event.exists) {
         studentName = event['name'];
-        parentName = event['pName'];
-        parentNo = event['pMobno'];
-        studentNo = event['sMobno'];
-        studentEmail = event['sEmail'];
-        urlDp = event['profileImageUrl'];
+        parentName = event['guardian'];
+        parentNo = event['guardianNo'];
+        studentNo = event['mobile'];
+        studentEmail = event['email'];
+        urlDp = event['photo'];
       }
       setState(() {});
     });
@@ -100,7 +100,7 @@ class _MainPagePState extends State<MainPageP> {
                   Icons.change_circle_outlined,
                   color: Colors.black54,
                 ),
-                title: const Text('Switch User'),
+                title: const Text('Switch Student'),
                 onTap: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => ManageProfile()));
@@ -236,6 +236,7 @@ class _MainPagePState extends State<MainPageP> {
     );
   }
 }
+
 // QuerySnapshot users =  FirebaseFirestore.instance
 //     .collection('students')
 //     .where('pMobno',isEqualTo:parentMob )

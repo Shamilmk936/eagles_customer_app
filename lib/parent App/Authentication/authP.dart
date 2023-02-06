@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../main.dart';
-import '../Model/userModel.dart';
+import '../Model/leaveModel.dart';
 import '../Screens/ManageProfile.dart';
 import 'LoginPageP.dart';
 
@@ -36,10 +36,11 @@ class Authentication {
           .snapshots()
           .listen((event) {
         if (event.docs.isNotEmpty) {
+          print('--------------------Found-----------------------------');
           for (var doc in event.docs) {
             pMob = doc["mobNo"];
+            pId = doc["pId"];
           }
-          print('--------------------Found-----------------------------');
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
@@ -59,23 +60,6 @@ class Authentication {
         }
       });
 
-      // QuerySnapshot users = await FirebaseFirestore.instance
-      //     .collection('parent')
-      //     .where('userEmail', isEqualTo: userEmail.toString()).get();
-
-      // if (users.docs.isNotEmpty) {
-      //      Navigator.pushAndRemoveUntil(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => MainPage(),
-      //         ),
-      //             (route) => false);
-      //
-      // }
-      // else {
-      //   print('error');
-      //   showSnackbar(context, 'Parent Email is Invalid');
-      // }
     } catch (ee) {
       print('-------------------------------------');
       print(ee.toString());
