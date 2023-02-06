@@ -67,7 +67,7 @@ class OSModel {
     webUrl = json['webUrl'] ?? "";
     qualification = json['qualification'] ?? "";
   }
-
+//hhhhh
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
 

@@ -22,6 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {});
   }
 
+//hhhhh
   @override
   void initState() {
     loginEvent().whenComplete(() async {
