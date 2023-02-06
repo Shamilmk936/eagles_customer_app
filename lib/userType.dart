@@ -33,7 +33,7 @@ class _UserTypeState extends State<UserType> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return SplashScreen();
+                          return const SplashScreen();
                         },
                       ));
                     },

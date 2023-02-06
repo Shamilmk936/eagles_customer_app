@@ -129,6 +129,7 @@ class _MCQState extends State<MCQ> {
             child: Text(isLastQuestion ? "Submit" : "Next")));
   }
 
+
   _showDialogue() {
     bool isPassed = false;
     if (score > questionList.length * 0.5) {

@@ -9,6 +9,7 @@ List studyList = [
         'https://cdn.imgbin.com/15/13/11/imgbin-sony-sony-qtwwDrvdSW25tijG1Je5ELJG1.jpg',
     "name": "Category 02"
   },
+
   {
     "circleavatar":
         'https://www.freeiconspng.com/thumbs/hp-logo-icon/hp-logo-icon-13.png',

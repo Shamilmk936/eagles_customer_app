@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> verifyxPhoneNumber(BuildContext context) async {
     if (kDebugMode) {
+
       print(loginNumber.text);
     }
     await phoneAuth.verifyPhoneNumber(

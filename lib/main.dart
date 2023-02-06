@@ -39,6 +39,8 @@ class _StudentAppState extends State<StudentApp> {
       debugShowCheckedModeBanner: false,
       home: SplashScreenP(),
     );
+
+
   }
 }
 

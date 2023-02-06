@@ -26,6 +26,7 @@ class OtpPage extends StatefulWidget {
       : super(key: key);
 
   @override
+
   State<OtpPage> createState() => _OtpPageState();
 }
 

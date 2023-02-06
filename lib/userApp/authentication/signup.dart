@@ -242,6 +242,7 @@ class _SignUpState extends State<SignUp> {
                       if (users.docs.isNotEmpty) {
                         verifyPhoneNumber(context);
                       } else {
+
                         showSnackbar(context, "You have already registered");
                       }
 

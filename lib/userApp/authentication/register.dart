@@ -18,7 +18,7 @@ class _RegisterState extends State<Register> {
         body: Container(
           color: Colors.yellow,
           child: Column(
-            children: [
+             children: [
               SvgPicture.asset(
                 'assets/signup.svg',
                 fit: BoxFit.scaleDown,

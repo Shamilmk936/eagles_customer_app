@@ -32,6 +32,8 @@ class _StageState extends State<Stage> {
     super.initState();
   }
 
+
+
   bool bColor = false;
   int stages = 0;
   String selected = '';

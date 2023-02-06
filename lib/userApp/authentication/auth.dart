@@ -75,6 +75,7 @@ class Authentication {
           signsOut(context);
         }
       });
+
     } catch (ee) {
       print('-------------------------------------');
       print(ee.toString());
