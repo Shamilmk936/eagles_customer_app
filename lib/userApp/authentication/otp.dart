@@ -137,16 +137,16 @@ class _OtpPageState extends State<OtpPage> {
                           var uid = 'OS$user';
                           currentUserId = uid;
                           db.collection('onlineStudents').doc(uid).set({
-                            'osName': widget.name,
-                            'OSId': uid,
+                            "OSId": uid,
+                            "Name": widget.name,
+                            "email": '',
                             'stage': "",
-                            'plan': "",
-                            'profile': "",
-                            'email': "",
                             'currentLesson': 1,
                             'currentModule': 1,
                             'currentTopic': 1,
+                            'plan': "",
                             'mobNo': widget.number,
+                            "profile": '',
                             'joinDate': DateTime.now()
                           }).then((value) {
                             id.reference.update({'OSId': FieldValue.increment(1)});
