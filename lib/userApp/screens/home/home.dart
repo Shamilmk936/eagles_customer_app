@@ -28,6 +28,7 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
+
   List module = [];
   List topic = [];
 
@@ -35,18 +36,16 @@ class _MyHomeState extends State<MyHome> {
     topic = [];
     print(currentStudent?.stage);
     while (currentStudent?.stage == null ||
-        currentStudent?.stage == '' ||
-        currentStudent?.stage == 'null') {
+        currentStudent?.stage == '') {
       await Future.delayed(Duration(seconds: 1));
     }
-    db
-        .collection('topic')
-        .where('stage', isEqualTo: currentStudent?.stage)
+    db.collection('topic')
+        // .where('stage', isEqualTo: currentStudent?.stage)
         // .orderBy('sNo', descending: true)
         .snapshots()
         .listen((event) {
       topic = event.docs;
-      print(topic);
+      print('topic = $topic');
       setState(() {});
     });
   }
@@ -54,6 +53,8 @@ class _MyHomeState extends State<MyHome> {
   @override
   void initState() {
     getTopics();
+    print('topic');
+    print('topic');
     super.initState();
   }
 
@@ -65,20 +66,21 @@ class _MyHomeState extends State<MyHome> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(35),
-                      topRight: Radius.circular(35)),
-                  color: Colors.blueGrey,
-                ),
-                accountName: Text(currentStudent?.sName ?? ''),
-                accountEmail: Text(currentStudent?.email ?? ''),
-                currentAccountPicture: CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(currentStudent?.profile ?? ''),
-                ),
-              ),
+              SizedBox(height: 20,),
+              // UserAccountsDrawerHeader(
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.only(
+              //         bottomLeft: Radius.circular(35),
+              //         topRight: Radius.circular(35)),
+              //     color: Colors.blueGrey,
+              //   ),
+              //   accountName: Text(currentStudent?.sName ?? '',style: TextStyle(color: Colors.white),),
+              //   accountEmail: Text(currentStudent?.email ?? ''),
+              //   // currentAccountPicture: CircleAvatar(
+              //   //   radius: 40,
+              //   //   backgroundImage: NetworkImage(currentStudent?.profile ?? ''),
+              //   // ),
+              // ),
               ListTile(
                 leading: Icon(
                   Icons.home,
@@ -316,7 +318,7 @@ class _MyHomeState extends State<MyHome> {
                           margin: EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('assets/kennan2.jpg'),
+                                image: AssetImage('assets/eagles logo.jpg'),
                                 fit: BoxFit.contain),
                             // color: Colors.amber
                           ),
@@ -357,8 +359,8 @@ class _MyHomeState extends State<MyHome> {
                       itemBuilder: (BuildContext ctx, index) {
                         return Column(
                           children: [
-                            currentTopic! >= topic[index]['sNo']
-                                ? InkWell(
+                            // currentTopic! >= topic[index]['sNo'] ?
+                            InkWell(
                                     onTap: () {
                                       Navigator.push(
                                           context,
@@ -374,15 +376,14 @@ class _MyHomeState extends State<MyHome> {
                                         width: 23,
                                       ),
                                     ),
-                                  )
-                                : CircleAvatar(
-                                    radius: 24,
-                                    backgroundColor: Color(0xffF3F3F3),
-                                    child: Icon(Icons.error),
                                   ),
+                                // : CircleAvatar(
+                                //     radius: 24,
+                                //     backgroundColor: Color(0xffF3F3F3),
+                                //     child: Icon(Icons.error),
+                                //   ),
                             SizedBox(height: 5),
-                            Text(topic[index]['topicName'],
-                                style: TextStyle(fontSize: 12))
+                            Text(topic[index]['topicName'], style: TextStyle(fontSize: 12))
                           ],
                         );
                       }),

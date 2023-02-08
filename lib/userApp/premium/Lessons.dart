@@ -3,29 +3,27 @@ import 'package:flutter/material.dart';
 
 import '../../globals/firebase_variables.dart';
 import '../screens/home/home.dart';
-import 'Lessons.dart';
 
-class ModuleList extends StatefulWidget {
-  final Map topic;
-  const ModuleList({Key? key, required this.topic}) : super(key: key);
+class LessonList extends StatefulWidget {
+  const LessonList({Key? key, }) : super(key: key);
 
   @override
-  State<ModuleList> createState() => _ModuleListState();
+  State<LessonList> createState() => _LessonListState();
 }
 
-class _ModuleListState extends State<ModuleList> {
-  List module = [];
+class _LessonListState extends State<LessonList> {
+  List moduleList = [];
   getModule() {
-    module = [];
+    moduleList = [];
 
-    db.collection('module')
-        .where('topic', isEqualTo: widget.topic['topicName'])
-        // .where('stage', isEqualTo: currentStudent?.stage)
-        // .orderBy('sNo', descending: true)
+    db.collection('moduleList')
+        .where('topic', isEqualTo:'topicName')
+    // .where('stage', isEqualTo: currentStudent?.stage)
+    // .orderBy('sNo', descending: true)
         .snapshots()
         .listen((event) {
-      module = event.docs;
-      print(module);
+      moduleList = event.docs;
+      print(moduleList);
       setState(() {});
     });
   }
@@ -44,7 +42,7 @@ class _ModuleListState extends State<ModuleList> {
     return Scaffold(
       appBar: AppBar(),
       body: ListView.builder(
-        itemCount: module.length,
+        itemCount: moduleList.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(10),
@@ -53,16 +51,16 @@ class _ModuleListState extends State<ModuleList> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LessonList()));
+                        builder: (context) => LessonList()));
               },
               child: Container(
                 height: 100,
-                 color:
+                color:
                 //         (currentTopic! >= widget.topic['sNo'] &&
                 //         currentModule! >= module[index]['sNo']) ?
                 Colors.green,
-                    // : Colors.red,
-                child: Center(child: Text(module[index]['moduleName'])),
+                // : Colors.red,
+                child: Center(child: Text(moduleList[index]['moduleName'])),
               ),
             ),
           );
