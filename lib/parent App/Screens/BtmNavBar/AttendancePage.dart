@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../main.dart';
-import '../../splashScreen.dart';
-import '../MainPageP.dart';
+import '../../../main.dart';
+import '../../../splashScreen.dart';
+import '../../mainPageP.dart';
 
 class AttendancePage extends StatefulWidget {
   const AttendancePage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-LeaveModel? currentStudent;
+// LeaveModel? currentStudent;
 StreamSubscription? listenUserSub;
 String? pMob;
 String? pId;
@@ -22,6 +22,7 @@ class LeaveModel {
   int? noDays;
   DateTime? fromD;
   DateTime? toD;
+  List? search;
 
 
   LeaveModel({
@@ -40,6 +41,7 @@ class LeaveModel {
     this.noDays,
     this.fromD,
     this.toD,
+    this.search,
   });
 
   LeaveModel.fromJson(Map<String, dynamic> json) {
@@ -58,6 +60,8 @@ class LeaveModel {
     noDays = json['noDays'] ?? 0 ;
     fromD = json['fromD'] == null ? DateTime.now() : json['fromD'].toDate();
     toD = json['toD'] == null ? DateTime.now() : json['toD'].toDate();
+    search = json['search'] ?? [] ;
+
 
   }
 
@@ -78,6 +82,8 @@ class LeaveModel {
     data['noDays'] = noDays ?? 0 ;
     data['fromD'] = fromD ?? DateTime.now();
     data['toD'] = toD ?? DateTime.now();
+    data['search'] = search ?? 0 ;
+
 
     return data;
   }

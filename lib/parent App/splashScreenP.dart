@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:eagles_customer_app/parent%20App/Screens/ManageProfile.dart';
+import 'package:eagles_customer_app/parent%20App/Screens/manageProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../splashScreen.dart';
 import '../userApp/homepage.dart';
-import 'Authentication/LoginPageP.dart';
+import 'Authentication/loginPageP.dart';
 
 
 var scrHeight;
@@ -27,6 +27,7 @@ class _SplashScreenPState extends State<SplashScreenP> {
     if(currentParentId!=null){
       preferences.setString('parentId', currentParentId!);
     }else{
+      currentParentId = preferences.getString('parentId') ?? "";
       currentParentId = preferences.getString('parentId') ?? "";
     }
 

@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eagles_customer_app/parent%20App/Model/parentModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
-import '../../main.dart';
-import '../../splashScreen.dart';
-import '../Model/leaveModel.dart';
-import '../MainPageP.dart';
-import 'ManageProfile.dart';
+import '../../../main.dart';
+import '../../../splashScreen.dart';
+import '../../Model/leaveModel.dart';
+import '../../mainPageP.dart';
+import '../manageProfile.dart';
 
 class LeavePage extends StatefulWidget {
   const LeavePage({Key? key}) : super(key: key);
@@ -318,8 +319,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                               const SizedBox(
                                 width: 5,
                               ),
-                              Text(
-                                parentName,
+                              Text(currentParent?.name ?? '',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               )
@@ -577,8 +577,8 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                                     sName: studentName,
                                                     sMobNo: studentNo,
                                                     sEmail: studentEmail,
-                                                    pName: parentName,
-                                                    pMobNo: parentNo,
+                                                    pName: currentParent?.name,
+                                                    pMobNo: currentParent?.mobNo,
                                                     delete: false,
                                                     status: 0,
                                                     leaveSubmission: DateTime.now(),
@@ -587,6 +587,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
                                                     noDays: noDays,
                                                     fromD: fromDate,
                                                     toD: returnDate ?? fromDate!.add(const Duration(days: 1)),
+                                                    search:setSearchParam(studentName+" "+studentId)
 
                                                   );
                                                   await FirebaseFirestore
@@ -646,7 +647,7 @@ class _LeavePageState extends State<LeavePage> with TickerProviderStateMixin {
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('leaveReport')
-                    .where('pMobNo', isEqualTo: parentNo)
+                    .where('pMobNo', isEqualTo: currentParent?.mobNo)
                     .where('delete', isEqualTo: false)
                     .snapshots(),
                 builder: (BuildContext context,

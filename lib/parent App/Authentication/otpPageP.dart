@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import '../../main.dart';
-import '../Screens/ManageProfile.dart';
+import '../Screens/manageProfile.dart';
 import '../splashScreenP.dart';
 
 class OtpPageP extends StatefulWidget {

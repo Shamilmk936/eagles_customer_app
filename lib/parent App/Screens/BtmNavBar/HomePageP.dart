@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../main.dart';
-import '../../splashScreen.dart';
-import '../Authentication/authP.dart';
-import '../MainPageP.dart';
-import 'ManageProfile.dart';
+import '../../../main.dart';
+import '../../../splashScreen.dart';
+import '../../Authentication/authP.dart';
+import '../../mainPageP.dart';
+import '../manageProfile.dart';
 
 class HomePageP extends StatefulWidget {
   const HomePageP({Key? key}) : super(key: key);

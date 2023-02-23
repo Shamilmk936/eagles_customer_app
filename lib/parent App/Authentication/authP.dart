@@ -6,8 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 import '../Model/leaveModel.dart';
-import '../Screens/ManageProfile.dart';
-import 'LoginPageP.dart';
+import '../Screens/manageProfile.dart';
+import 'loginPageP.dart';
 
 var userName;
 var userImage;

@@ -1,21 +1,46 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eagles_customer_app/main.dart';
+import 'package:eagles_customer_app/parent%20App/Model/parentModel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../userApp/authentication/loginPage.dart';
-import 'Authentication/LoginPageP.dart';
+import 'Authentication/loginPageP.dart';
 import 'Authentication/authP.dart';
-import 'Screens/AttendancePage.dart';
-import 'Screens/HomePageP.dart';
-import 'Screens/LeavePage.dart';
-import 'Screens/ManageProfile.dart';
-import 'Screens/ReportsPage.dart';
+import 'Screens/BtmNavBar/AttendancePage.dart';
+import 'Screens/BtmNavBar/HomePageP.dart';
+import 'Screens/BtmNavBar/LeavePage.dart';
+import 'Screens/fineReportPage.dart';
+import 'Screens/manageProfile.dart';
+import 'Screens/BtmNavBar/ReportsPage.dart';
+import 'Screens/profileUpload.dart';
 
 String studentName = "";
-String parentName = "";
 String studentNo = "";
-String parentNo = "";
 String studentEmail = "";
 String urlDp = "";
+
+
+setSearchParam(String caseNumber) {
+  List<String> caseSearchList = <String>[];
+  String temp = "";
+
+  List<String> nameSplits = caseNumber.split(" ");
+  for (int i = 0; i < nameSplits.length; i++) {
+    String name = "";
+
+    for (int k = i; k < nameSplits.length; k++) {
+      name = name + nameSplits[k] + " ";
+    }
+    temp = "";
+
+    for (int j = 0; j < name.length; j++) {
+      temp = temp + name[j];
+      caseSearchList.add(temp.toUpperCase());
+    }
+  }
+  return caseSearchList;
+}
 
 class MainPageP extends StatefulWidget {
   const MainPageP({Key? key}) : super(key: key);
@@ -29,6 +54,7 @@ class _MainPagePState extends State<MainPageP> {
   void initState() {
     getStudent();
     print('MainPage');
+    print(currentParent?.name);
     print(studentId);
     print(studentName);
     super.initState();
@@ -42,8 +68,6 @@ class _MainPagePState extends State<MainPageP> {
         .listen((event) {
       if (event.exists) {
         studentName = event['name'];
-        parentName = event['guardian'];
-        parentNo = event['guardianNo'];
         studentNo = event['mobile'];
         studentEmail = event['email'];
         urlDp = event['photo'];
@@ -130,13 +154,13 @@ class _MainPagePState extends State<MainPageP> {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.add_box_outlined,
+                  Icons.history_edu,
                   color: Colors.black54,
                 ),
-                title: const Text('Apply Leave'),
+                title: const Text('Fine History'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LeavePage()));
+                      builder: (context) => const FineReports()));
                 },
               ),
               ListTile(
@@ -163,6 +187,19 @@ class _MainPagePState extends State<MainPageP> {
                       builder: (context) => AttendancePage()));
                 },
               ),
+              currentParent?.profileUrl == ''
+                  ?ListTile(
+                leading: Icon(
+                  Icons.person,
+                  color: Colors.black54,
+                ),
+                title: Text('Upload Profile'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ProfileUploadPage()));
+                },
+              )
+                  :SizedBox(),
               ListTile(
                 leading: Icon(
                   Icons.feedback,

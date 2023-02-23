@@ -10,7 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../globals/firebase_variables.dart';
 import '../../../main.dart';
 import '../../../parent App/Authentication/authP.dart';
-import '../../../parent App/MainPageP.dart';
+import '../../../parent App/mainPageP.dart';
 import '../../../splashScreen.dart';
 import '../../authentication/authSignUp.dart';
 import '../../authentication/loginPage.dart';
