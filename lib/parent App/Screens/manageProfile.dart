@@ -5,7 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../splashScreen.dart';
 import '../Authentication/authP.dart';
 import '../Model/leaveModel.dart';
-import '../MainPageP.dart';
+import '../mainPageP.dart';
+import '../Model/parentModel.dart';
 
 String studentId = "";
 
@@ -22,6 +23,22 @@ class _ManageProfileState extends State<ManageProfile> {
       .collection('candidates')
       .where('parentId', isEqualTo: currentParentId)
       .snapshots();
+
+  getParent()  {
+    FirebaseFirestore.instance
+        .collection('parent')
+        .doc(currentParentId).snapshots().listen((event) {
+      try{
+        currentParent = ParentModel.fromJson(event.data()!);
+        if(mounted){
+          setState(() {});
+        }
+      }
+      catch(e){
+        print(e);
+      }
+    });
+  }
 
 //   Future<List?> geStudent(String id) async {
 //     try {
@@ -61,6 +78,7 @@ class _ManageProfileState extends State<ManageProfile> {
 
   void initState() {
     print('Manage Profile');
+    getParent();
     super.initState();
   }
 
